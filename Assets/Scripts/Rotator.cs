@@ -4,15 +4,16 @@ using UnityEngine;
 public class Rotator : MonoBehaviour
 {
     public List<Vector3> rotations;
-    private int rotateIndex;
+    public int rotateIndex { get; private set; }
 
     private void Awake()
     {
         rotateIndex = 0;
+        transform.localEulerAngles = rotations[rotateIndex];
     }
     public void Rotate()
     {
-        transform.Rotate(rotations[rotateIndex++]);
-        if(rotateIndex > rotations.Count) rotateIndex = 0;
+        transform.localEulerAngles = rotations[rotateIndex++];
+        if(rotateIndex >= rotations.Count) rotateIndex = 0;
     }
 }

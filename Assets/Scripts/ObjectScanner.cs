@@ -1,12 +1,44 @@
+using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.UIElements;
+using System.IO;
 
-public class ObjectScanner: MonoBehaviour
+/// <summary>
+/// Script for caputring isolated and context images for a set 
+/// </summary>
+public class ObjectScanner : MonoBehaviour
 {
-    public GameObject scanObject;
+    private Camera isoCamera, contextCamera;
+    private GameObject scanObject;
+    public RenderTexture isoOutput,contextOutput;
+    public Texture2D isoTexture, contextTexture;
+    private int scanObjectPrevLayer = 0;
+    List<GameObject> culled;
+
+    // TODO: i dont think i shoudl do this. probably make it a param for scan
+    public GameObject ScanObject {  get { return scanObject; }
+        set
+        {
+            if(scanObject != null)
+            {
+                scanObject.layer = scanObjectPrevLayer;
+            }
+
+            scanObject = value;
+            scanObjectPrevLayer = (value == null) ? 0 : value.layer;
+
+            if(value != null)
+            {
+                transform.position = scanObject.transform.position;
+                scanObject.layer = 6;
+            }
+        }
+    }
     private Rotator hRotator, vRotator;
 
     static ObjectScanner instance;
-    public static ObjectScanner  Instance()
+    public static ObjectScanner Instance()
     {
         if (instance == null)
         {
@@ -19,6 +51,12 @@ public class ObjectScanner: MonoBehaviour
     {
         hRotator = transform.GetChild(0).GetComponent<Rotator>();
         vRotator = hRotator.transform.GetChild(0).GetComponent<Rotator>();
+        isoCamera = vRotator.transform.GetChild(0).GetComponent<Camera>();
+        contextCamera = vRotator.transform.GetChild(1).GetComponent<Camera>();
+        culled = new List<GameObject>();
+
+        isoTexture = new Texture2D(isoOutput.width, isoOutput.height);
+        contextTexture = new Texture2D(contextOutput.width, contextOutput.height);
     }
 
     /// <summary>
@@ -27,11 +65,27 @@ public class ObjectScanner: MonoBehaviour
     /// </summary>
     public void Scan()
     {
+        Debug.Log($"Scanning {scanObject.name}");
         for (int i = 0; i < 4; i++)
         {
             for(int j = 0; j < 2; j++)
             {
-                // Capture Context and Iso Image
+                // Capture Iso Image
+                isoCamera.Render();
+                RenderTexture.active = isoOutput;
+                isoTexture.ReadPixels(new Rect(0, 0, isoOutput.width, isoOutput.height), 0, 0);
+                isoTexture.Apply();
+                File.WriteAllBytes($"Assets/Scans/{scanObject.name}_iso_scan{hRotator.rotateIndex}{vRotator.rotateIndex}.png", isoTexture.EncodeToPNG());
+
+                // Capture Context Image
+                Cull();
+                Debug.Log($"Culled {culled.Count} objects");
+                contextCamera.Render();
+                RenderTexture.active = contextOutput;
+                contextTexture.ReadPixels(new Rect(0, 0, contextOutput.width, contextOutput.height), 0, 0);
+                contextTexture.Apply();
+                File.WriteAllBytes($"Assets/Scans/{scanObject.name}_context_scan{hRotator.rotateIndex}{vRotator.rotateIndex}.png", contextTexture.EncodeToPNG());
+                UnCull();
 
                 // Rotation about X Axis (Pitch)
                 vRotator.Rotate();
@@ -39,5 +93,32 @@ public class ObjectScanner: MonoBehaviour
             // Rotation about Y Axis (Yaw)
             hRotator.Rotate();
         }
+    }
+
+    void Cull()
+    {
+        List<RaycastHit> hits;
+        Vector3 center = scanObject.transform.position;
+        Vector3 origin = contextCamera.transform.position;
+        Ray ray = new Ray(origin, center - origin);
+        hits = new List<RaycastHit>(Physics.RaycastAll(ray, (center - origin).magnitude));
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.transform.gameObject == scanObject) continue;
+
+            // Possible issue, adding children of already added gameobjects (shouldnt be an issue just redundant)
+            hit.transform.gameObject.SetActive(false);
+            culled.Add(hit.transform.gameObject);
+        }        
+    }
+
+    void UnCull()
+    {
+        foreach (GameObject child in culled)
+        {
+            child.SetActive(true);
+        }
+        culled.Clear();
     }
 }
