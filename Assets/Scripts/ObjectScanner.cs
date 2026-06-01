@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 using System.IO;
 
 /// <summary>
@@ -13,6 +11,8 @@ public class ObjectScanner : MonoBehaviour
     private GameObject scanObject;
     public RenderTexture isoOutput,contextOutput;
     public Texture2D isoTexture, contextTexture;
+    public Dictionary<string, List<byte[]>> contextScans;
+    public Dictionary<string, List<byte[]>> isoScans;
     private int scanObjectPrevLayer = 0;
     List<GameObject> culled;
 
@@ -57,6 +57,9 @@ public class ObjectScanner : MonoBehaviour
 
         isoTexture = new Texture2D(isoOutput.width, isoOutput.height);
         contextTexture = new Texture2D(contextOutput.width, contextOutput.height);
+
+        isoScans = new();
+        contextScans = new();
     }
 
     /// <summary>
@@ -66,6 +69,10 @@ public class ObjectScanner : MonoBehaviour
     public void Scan()
     {
         Debug.Log($"Scanning {scanObject.name}");
+        
+        contextScans.Add(scanObject.name, new());
+        isoScans.Add(scanObject.name, new());
+        
         for (int i = 0; i < 4; i++)
         {
             for(int j = 0; j < 2; j++)
@@ -75,6 +82,7 @@ public class ObjectScanner : MonoBehaviour
                 RenderTexture.active = isoOutput;
                 isoTexture.ReadPixels(new Rect(0, 0, isoOutput.width, isoOutput.height), 0, 0);
                 isoTexture.Apply();
+                isoScans[scanObject.name].Add(isoTexture.EncodeToJPG());
                 File.WriteAllBytes($"Assets/Scans/{scanObject.name}_iso_scan{hRotator.rotateIndex}{vRotator.rotateIndex}.png", isoTexture.EncodeToPNG());
 
                 // Capture Context Image
@@ -84,6 +92,7 @@ public class ObjectScanner : MonoBehaviour
                 RenderTexture.active = contextOutput;
                 contextTexture.ReadPixels(new Rect(0, 0, contextOutput.width, contextOutput.height), 0, 0);
                 contextTexture.Apply();
+                contextScans[scanObject.name].Add(contextTexture.EncodeToJPG());
                 File.WriteAllBytes($"Assets/Scans/{scanObject.name}_context_scan{hRotator.rotateIndex}{vRotator.rotateIndex}.png", contextTexture.EncodeToPNG());
                 UnCull();
 

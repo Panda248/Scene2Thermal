@@ -10,6 +10,7 @@ public class SceneScanner : MonoBehaviour
     public RenderTexture scanOutput;
     public Texture2D outputTexture;
     public Transform environmentParent;
+    public List<byte[]> scans;
     Rotator rotator;
     Camera scan;
     List<GameObject> culled;
@@ -29,6 +30,7 @@ public class SceneScanner : MonoBehaviour
         culled = new List<GameObject>();
         scan = GetComponentInChildren<Camera>();
         outputTexture = new Texture2D(scanOutput.width, scanOutput.height);
+        scans = new List<byte[]>();
     }
 
     public void Scan()
@@ -43,6 +45,7 @@ public class SceneScanner : MonoBehaviour
             scan.Render();
             outputTexture.ReadPixels(new Rect(0, 0, scanOutput.width, scanOutput.height), 0, 0);
             outputTexture.Apply();
+            scans.Add(outputTexture.EncodeToJPG());
             File.WriteAllBytes($"Assets/Scans/scene_scan{rotator.rotateIndex}.png",outputTexture.EncodeToPNG());
             rotator.Rotate();
             UnCull();
