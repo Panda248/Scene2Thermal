@@ -18,7 +18,7 @@ public class Client : MonoBehaviour
 
     }
 
-    public async Task<String> RequestSceneInference() 
+    public async Task<object> RequestSceneInference() 
     {
         SceneScanner scanner = SceneScanner.Instance();
 
@@ -54,10 +54,10 @@ public class Client : MonoBehaviour
 
         var responseContent = await response.Content.ReadAsStringAsync();
 
-        return responseContent;
+        return JsonUtility.FromJson<object>(responseContent);
     }
 
-    public async Task<String> RequestObjectInference(GameObject obj)
+    public async Task<object> RequestObjectInference(GameObject obj)
     {
         ObjectScanner scanner = ObjectScanner.Instance();
      
@@ -103,9 +103,7 @@ public class Client : MonoBehaviour
         response.EnsureSuccessStatusCode();
 
         var responseContent = await response.Content.ReadAsStringAsync();
-
-        return responseContent;
-
+        return JsonUtility.FromJson<object>(responseContent);
     }
 
 
