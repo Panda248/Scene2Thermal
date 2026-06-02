@@ -10,7 +10,7 @@ public class BatchScannerEditor : Editor
         DrawDefaultInspector();
         if (GUILayout.Button("Scan"))
         {
-            ((BatchScan)target).Scan();
+            ((BatchScan)target).Scan(((BatchScan)target).saveToDisk);
         }
     }
 }

@@ -3,14 +3,17 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 /// <summary>
 /// Handles HTTP requests to server for Semantic Inference
 /// </summary>
 public class Client : MonoBehaviour
 {
+    public GameObject targetObject;
+    public String objectInferenceJson, sceneInferenceJson;
     static HttpClient httpClient = new()
     {
-        BaseAddress = new Uri("https://jsonplaceholder.typicode.com")// replace w/ final url
+        BaseAddress = new Uri("http://127.0.0.1:5000")// replace w/ final url
     }; 
 
     private void Awake()
@@ -18,7 +21,7 @@ public class Client : MonoBehaviour
 
     }
 
-    public async Task<object> RequestSceneInference() 
+    public async Task RequestSceneInference() 
     {
         SceneScanner scanner = SceneScanner.Instance();
 
@@ -30,34 +33,38 @@ public class Client : MonoBehaviour
         using ByteArrayContent image3 = new(scanner.scans[2]);
         using ByteArrayContent image4 = new(scanner.scans[3]);
 
+
         // Store Scene data in json
-        using StringContent name = new(JsonUtility.ToJson(new
+        string nameJson = JsonConvert.SerializeObject(new
         {
             name = scanner.environmentParent.name,
-        }),
-        System.Text.Encoding.UTF8,
-        "application/json");
+        });
+        using StringContent name = new(nameJson, System.Text.Encoding.UTF8, "application/json");
+        Debug.Log(nameJson);
+
 
         // Put everything together
         using MultipartFormDataContent content = new();
-        content.Add(name);
-        content.Add(image1, "image1");
-        content.Add(image2, "image2");
-        content.Add(image3, "image3");
-        content.Add(image4, "image4");
-        using HttpResponseMessage response = await httpClient.PostAsync(
-            "object-inference",
-            content
-         );
+        
+        content.Add(name, "jsonText");
+        
+        content.Add(image1, "scene1", "scene1.jpg");
+        content.Add(image2, "scene2", "scene2.jpg");
+        content.Add(image3, "scene3", "scene3.jpg");
+        content.Add(image4, "scene4", "scene4.jpg");
+        
+        // Send and await response
+        using HttpResponseMessage response = await httpClient.PostAsync("scene-inference", content);
 
-        response.EnsureSuccessStatusCode();
+        //response.EnsureSuccessStatusCode();
 
         var responseContent = await response.Content.ReadAsStringAsync();
-
-        return JsonUtility.FromJson<object>(responseContent);
+        Debug.Log($"{responseContent}");
+        sceneInferenceJson = responseContent.ToString();
+        //return JsonUtility.FromJson<object>(responseContent);
     }
 
-    public async Task<object> RequestObjectInference(GameObject obj)
+    public async Task RequestObjectInference(GameObject obj)
     {
         ObjectScanner scanner = ObjectScanner.Instance();
      
@@ -66,44 +73,49 @@ public class Client : MonoBehaviour
         // Grab images associated with obj
         List < byte[]> isoScans = scanner.isoScans[obj.name];
         List < byte[]> contextScans = scanner.contextScans[obj.name];
+
+        Debug.Log($"iso has{isoScans.Count}");
+        Debug.Log($"context has{contextScans.Count}");
+
         
-        // Stuff images into HttpContent objects
-        List<ByteArrayContent> isoImages = new();
-        List<ByteArrayContent> contextImages = new();
-        for (int i = 0; i < isoScans.Count; i++)
-        {
-            isoImages.Add(new(isoScans[i]));
-            contextImages.Add(new(contextScans[i]));
-        }
 
         // Store Object data into json
-        using StringContent objContent = new (JsonUtility.ToJson(new
+        string objContentJson = JsonConvert.SerializeObject(new
         {
             name = obj.name,
             scale = obj.transform.localScale.ToString(),
             size = obj.GetComponent<MeshFilter>()?.mesh.bounds.size.ToString()
-        }),
-        System.Text.Encoding.UTF8,
-        "application/json");
+        });
+        using StringContent objContent = new (objContentJson, System.Text.Encoding.UTF8, "application/json");
+
+        Debug.Log(objContentJson);
         
-        // Put everything together into content
+        // Build final packet
         using MultipartFormDataContent content = new();
-        content.Add(objContent);
-        for (int i = 0; i < contextImages.Count; i++)
+
+        content.Add(objContent, "jsonText");
+
+        // Add Images
+        for (int i = 0; i < isoScans.Count; i++)
         {
-            content.Add(contextImages[i], $"context{i}");
-            content.Add(isoImages[i], $"iso{i}");
+            Debug.Log($"iso bytes: {isoScans[i].Length}");
+            Debug.Log($"context bytes: {contextScans[i].Length}");
+            content.Add(new ByteArrayContent(isoScans[i]), $"iso{i+1}", $"iso{i+1}.jpg");
+            content.Add(new ByteArrayContent(contextScans[i]), $"context{i+1}", $"context{i+1}.jpg");
         }
 
+        // Send and Await Response
         using HttpResponseMessage response = await httpClient.PostAsync(
             "object-inference",
             content
          );
 
-        response.EnsureSuccessStatusCode();
+        //response.EnsureSuccessStatusCode();
 
         var responseContent = await response.Content.ReadAsStringAsync();
-        return JsonUtility.FromJson<object>(responseContent);
+        Debug.Log($"{responseContent}");
+        objectInferenceJson = responseContent.ToString();
+        //return JsonUtility.FromJson<object>(responseContent);
     }
 
 
