@@ -13,7 +13,8 @@ public class Rotator : MonoBehaviour
     }
     public void Rotate()
     {
-        transform.localEulerAngles = rotations[rotateIndex++];
-        if(rotateIndex >= rotations.Count) rotateIndex = 0;
+        rotateIndex++;
+        if (rotateIndex >= rotations.Count) rotateIndex = 0;
+        transform.localEulerAngles = rotations[rotateIndex];
     }
 }
