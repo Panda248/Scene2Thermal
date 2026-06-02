@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Receiver.Transformation;
 
 /// <summary>
 /// Script for capturing Scene images
@@ -33,22 +34,28 @@ public class SceneScanner : MonoBehaviour
         scans = new List<byte[]>();
     }
 
-    public void Scan()
+    public void Scan(bool saveToDisk)
     {
         transform.position = GetSceneCenter();
         for (int i = 0; i < 4; i++)
         {
+            Debug.Log($"scene scan {i} with rotation {transform.rotation.eulerAngles.y} and index {rotator.rotateIndex}");
             Cull();
-            Debug.Log($"Center is {GetSceneCenter()}");
-            Debug.Log($"{culled.Count} objects culled");
+            //Debug.Log($"Center is {GetSceneCenter()}");
+            //Debug.Log($"{culled.Count} objects culled");
+
             RenderTexture.active = scanOutput;
             scan.Render();
             outputTexture.ReadPixels(new Rect(0, 0, scanOutput.width, scanOutput.height), 0, 0);
             outputTexture.Apply();
+            
             scans.Add(outputTexture.EncodeToJPG());
-            File.WriteAllBytes($"Assets/Scans/scene_scan{rotator.rotateIndex}.png",outputTexture.EncodeToPNG());
-            rotator.Rotate();
+            
+            if(saveToDisk) File.WriteAllBytes($"Assets/Scans/scene_scan{rotator.rotateIndex}.png",outputTexture.EncodeToPNG());
+            
             UnCull();
+            
+            rotator.Rotate();
         }
         transform.position = Vector3.zero;
     }
