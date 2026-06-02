@@ -66,7 +66,7 @@ public class ObjectScanner : MonoBehaviour
     /// Performs a scan on the scanObject, taking both isolated and context pictures of the <br></br>
     /// object from 8 angles
     /// </summary>
-    public void Scan()
+    public void Scan(bool saveToDisk)
     {
         Debug.Log($"Scanning {scanObject.name}");
         
@@ -79,21 +79,27 @@ public class ObjectScanner : MonoBehaviour
             {
                 // Capture Iso Image
                 isoCamera.Render();
+                
                 RenderTexture.active = isoOutput;
                 isoTexture.ReadPixels(new Rect(0, 0, isoOutput.width, isoOutput.height), 0, 0);
                 isoTexture.Apply();
+                
                 isoScans[scanObject.name].Add(isoTexture.EncodeToJPG());
-                File.WriteAllBytes($"Assets/Scans/{scanObject.name}_iso_scan{hRotator.rotateIndex}{vRotator.rotateIndex}.png", isoTexture.EncodeToPNG());
+                
+                if (saveToDisk) File.WriteAllBytes($"Assets/Scans/{scanObject.name}_iso_scan{hRotator.rotateIndex}{vRotator.rotateIndex}.png", isoTexture.EncodeToPNG());
 
                 // Capture Context Image
                 Cull();
                 Debug.Log($"Culled {culled.Count} objects");
                 contextCamera.Render();
+                
                 RenderTexture.active = contextOutput;
                 contextTexture.ReadPixels(new Rect(0, 0, contextOutput.width, contextOutput.height), 0, 0);
                 contextTexture.Apply();
+                
                 contextScans[scanObject.name].Add(contextTexture.EncodeToJPG());
-                File.WriteAllBytes($"Assets/Scans/{scanObject.name}_context_scan{hRotator.rotateIndex}{vRotator.rotateIndex}.png", contextTexture.EncodeToPNG());
+                
+                if (saveToDisk) File.WriteAllBytes($"Assets/Scans/{scanObject.name}_context_scan{hRotator.rotateIndex}{vRotator.rotateIndex}.png", contextTexture.EncodeToPNG());
                 UnCull();
 
                 // Rotation about X Axis (Pitch)
