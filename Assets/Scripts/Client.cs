@@ -60,7 +60,7 @@ public class Client : MonoBehaviour
 
         var responseContent = await response.Content.ReadAsStringAsync();
         Debug.Log($"{responseContent}");
-        sceneInferenceJson = responseContent.ToString();
+        sceneInferenceJson = responseContent.ToString(); // this should have scene category
         //return JsonUtility.FromJson<object>(responseContent);
     }
 
@@ -76,8 +76,6 @@ public class Client : MonoBehaviour
 
         Debug.Log($"iso has{isoScans.Count}");
         Debug.Log($"context has{contextScans.Count}");
-
-        
 
         // Store Object data into json
         string objContentJson = JsonConvert.SerializeObject(new
