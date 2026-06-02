@@ -72,11 +72,13 @@ public class ObjectScanner : MonoBehaviour
         
         contextScans.Add(scanObject.name, new());
         isoScans.Add(scanObject.name, new());
-        
+        isoCamera.transform.localPosition = Vector3.back * CullUtility.GetTargetDistance(isoCamera.fieldOfView, scanObject.GetComponent<Renderer>().bounds, 0.6f);
+
         for (int i = 0; i < 4; i++)
         {
             for(int j = 0; j < 2; j++)
             {
+
                 // Capture Iso Image
                 isoCamera.Render();
                 
@@ -90,6 +92,7 @@ public class ObjectScanner : MonoBehaviour
 
                 // Capture Context Image
                 Cull();
+                //culled = CullUtility.Cull(contextCamera.transform.position, scanObject.transform.position);
                 Debug.Log($"Culled {culled.Count} objects");
                 contextCamera.Render();
                 

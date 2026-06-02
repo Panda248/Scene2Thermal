@@ -41,6 +41,7 @@ public class SceneScanner : MonoBehaviour
         {
             Debug.Log($"scene scan {i} with rotation {transform.rotation.eulerAngles.y} and index {rotator.rotateIndex}");
             Cull();
+            //culled = CullUtility.Cull(scan.transform.position, GetSceneCenter());
             //Debug.Log($"Center is {GetSceneCenter()}");
             //Debug.Log($"{culled.Count} objects culled");
 

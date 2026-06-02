@@ -949,7 +949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BatchScan
   environmentParent: {fileID: 292659272}
-  saveToDisk: 1
+  saveToDisk: 0
 --- !u!1001 &645510945
 PrefabInstance:
   m_ObjectHideFlags: 0
