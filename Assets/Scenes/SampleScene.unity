@@ -151,6 +151,7 @@ MonoBehaviour:
   targetObject: {fileID: 307586200}
   objectInferenceJson: 
   sceneInferenceJson: 
+  SceneCategory: 
 --- !u!4 &13458264
 Transform:
   m_ObjectHideFlags: 0
@@ -2948,6 +2949,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2863057271759000514, guid: 88b1a45f4ca0c9f46bf7e7637b2831ab, type: 3}
   m_PrefabInstance: {fileID: 1475340318}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1523297642
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1523297643}
+  m_Layer: 0
+  m_Name: ThermResolver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1523297643
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523297642}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.093, y: 1.13498, z: -3.97794}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1611354279
 GameObject:
   m_ObjectHideFlags: 0
@@ -3860,3 +3892,4 @@ SceneRoots:
   - {fileID: 13458264}
   - {fileID: 576280728}
   - {fileID: 292659272}
+  - {fileID: 1523297643}
