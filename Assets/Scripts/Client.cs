@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 public class Client : MonoBehaviour
 {
     public GameObject targetObject;
-    public String objectInferenceJson, sceneInferenceJson;
+    public String objectInferenceJson, sceneInferenceJson, SceneCategory;
     static HttpClient httpClient = new()
     {
         BaseAddress = new Uri("http://127.0.0.1:5000")// replace w/ final url
@@ -61,6 +61,7 @@ public class Client : MonoBehaviour
         var responseContent = await response.Content.ReadAsStringAsync();
         Debug.Log($"{responseContent}");
         sceneInferenceJson = responseContent.ToString(); // this should have scene category
+        SceneCategory = responseContent.ToString();
         //return JsonUtility.FromJson<object>(responseContent);
     }
 
@@ -82,7 +83,8 @@ public class Client : MonoBehaviour
         {
             name = obj.name,
             scale = obj.transform.localScale.ToString(),
-            size = obj.GetComponent<MeshFilter>()?.mesh.bounds.size.ToString()
+            size = obj.GetComponent<MeshFilter>()?.mesh.bounds.size.ToString(),
+            scene_category = SceneCategory
         });
         using StringContent objContent = new (objContentJson, System.Text.Encoding.UTF8, "application/json");
 
