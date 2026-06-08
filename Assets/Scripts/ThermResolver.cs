@@ -72,7 +72,7 @@ public class ThermResolver : MonoBehaviour
     *sum each component for each contact.
     * 
     */
-    void ResolveEdge(ThermEdge edge)
+    void ResolveEdgeFourier(ThermEdge edge)
     {
         // From = T0, To = T1
         Debug.Log($"Resolving edge from {edge.from.name} to {edge.to.name}");
@@ -95,7 +95,7 @@ public class ThermResolver : MonoBehaviour
     {
         foreach(ThermEdge edge in graph.edges)
             {
-                ResolveEdge(edge);
+                ResolveEdgeFourier(edge);
         }
     }
     public void UpdateObjects()
