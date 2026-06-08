@@ -1,20 +1,12 @@
 using UnityEngine;
 
-public class ThermEdge : MonoBehaviour
+public class ThermEdge
 {
-    ThermObject from;
-    ThermObject to;
-    public float weight;
-    public ThermEdge(ThermObject from, ThermObject to, float weight)
+    public ThermObject from;
+    public ThermObject to;
+    public ThermEdge(ThermObject from, ThermObject to)
     {
         this.from = from;
         this.to = to;
-        this.weight = weight;
-    }
-
-    public void ApplyWeight()
-    {
-        from.ApplyThermalDelta(-weight * Time.fixedDeltaTime);
-        to.ApplyThermalDelta(weight * Time.fixedDeltaTime);
     }
 }

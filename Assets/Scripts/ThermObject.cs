@@ -1,14 +1,12 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public class ThermObject : MonoBehaviour
 {
-    private float conductivity;
-    public float Conductivity { get; private set; }
-    public float temperature;
-
-    List<ThermObject> contacts;
+    public float conductivity, mass, specificHeat;
+    public float temperature, newTemperature;
 
     //public List<ThermObject> contacts;
 
@@ -27,14 +25,19 @@ public class ThermObject : MonoBehaviour
         {
             GetComponent<Collider>().isTrigger = true;
         }
+        newTemperature = temperature;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         ThermObject other = collision.gameObject.GetComponent<ThermObject>();
-        if (other != null)
+        if (other != null && ThermResolver.Instance().graph.GetEdge(this, other) == null)
         {
-            contacts.Add(other);
+            bool added = ThermResolver.Instance().graph.AddEdge(this, other);
+            if (added)
+            {
+                Debug.Log("Added edge between " + this.name + " and " + other.name);
+            }
         }
     }
 
@@ -43,13 +46,23 @@ public class ThermObject : MonoBehaviour
         ThermObject other = collision.gameObject.GetComponent<ThermObject>();
         if (other != null)
         {
-            contacts.Remove(other);
+            bool removed = ThermResolver.Instance().graph.RemoveEdge(this, other);
+            if (removed)
+            {
+                Debug.Log("Removed edge between " + this.name + " and " + other.name);
+            }
         }
     }
 
-    public void ApplyThermalDelta(float delta)
+    public void ApplyHeatFlow(float heatFlow)
     {
-        temperature += delta;
+        float deltaTemp = heatFlow / (mass * specificHeat);
+        Debug.Log($"Applying heat flow of {heatFlow} to {name}. {deltaTemp} degrees");
+        newTemperature += deltaTemp;
+    }
+    public void UpdateTemperature()
+    {
+        temperature = newTemperature;
     }
 
 }
