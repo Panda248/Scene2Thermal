@@ -13,19 +13,47 @@ public class ThermObject : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        if(!GetComponent<Collider>().isTrigger)
-        {
-            GetComponent<Collider>().isTrigger = true;
-        }
+        //if(!GetComponent<Collider>().isTrigger)
+        //{
+        //    GetComponent<Collider>().isTrigger = true;
+        //}
+        newTemperature = 0;
     }
 
     private void OnValidate()
     {
-        if (!GetComponent<Collider>().isTrigger)
-        {
-            GetComponent<Collider>().isTrigger = true;
-        }
-        newTemperature = temperature;
+        //if (!GetComponent<Collider>().isTrigger)
+        //{
+        //    GetComponent<Collider>().isTrigger = true;
+        //}
+        newTemperature = 0;
+    }
+
+    public void SetProperties(JsonClasses.MaterialInference materialInference)
+    {
+        conductivity = materialInference.thermal_conductivity;
+        mass = materialInference.mass;
+        specificHeat = materialInference.specific_heat;
+        temperature = materialInference.temperature;
+    }
+
+    public void SetProperties(JsonClasses.ObjectMaterialInference objectMaterialInference)
+    {
+        conductivity = objectMaterialInference.thermal_conductivity;
+        mass = objectMaterialInference.mass;
+        specificHeat = objectMaterialInference.heat_capacity;
+        temperature = objectMaterialInference.initial_temperature;
+    }
+    public void ApplyHeatFlow(float heatFlow)
+    {
+        float deltaTemp = heatFlow / (mass * specificHeat);
+        Debug.Log($"Applying heat flow of {heatFlow} to {name}. {deltaTemp} degrees");
+        newTemperature += deltaTemp;
+    }
+    public void UpdateTemperature()
+    {
+        temperature += newTemperature;
+        newTemperature = 0;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -54,15 +82,6 @@ public class ThermObject : MonoBehaviour
         }
     }
 
-    public void ApplyHeatFlow(float heatFlow)
-    {
-        float deltaTemp = heatFlow / (mass * specificHeat);
-        Debug.Log($"Applying heat flow of {heatFlow} to {name}. {deltaTemp} degrees");
-        newTemperature += deltaTemp;
-    }
-    public void UpdateTemperature()
-    {
-        temperature = newTemperature;
-    }
+    
 
 }

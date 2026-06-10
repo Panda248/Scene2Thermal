@@ -1,5 +1,4 @@
 using UnityEditor;
-using UnityEngine.Audio;
 using UnityEngine;
 
 [CustomEditor(typeof(BatchScan))]
@@ -10,7 +9,7 @@ public class BatchScannerEditor : Editor
         DrawDefaultInspector();
         if (GUILayout.Button("Scan"))
         {
-            ((BatchScan)target).Scan(((BatchScan)target).saveToDisk);
+            ((BatchScan)target).ScanAll(((BatchScan)target).saveToDisk);
         }
     }
 }

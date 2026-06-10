@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ThermResolver : MonoBehaviour
@@ -34,7 +33,7 @@ public class ThermResolver : MonoBehaviour
          */
         foreach(ThermEdge edge in graph.edges)
         {
-            ResolveEdge(edge);
+            ResolveEdgeFourier(edge);
         }
         foreach(ThermObject obj in graph.thermObjects)
         {
@@ -89,6 +88,17 @@ public class ThermResolver : MonoBehaviour
 
         edge.from.ApplyHeatFlow(-qt);
         edge.to.ApplyHeatFlow(qt);
+    }
+
+    void ResolveEdgeLump(ThermEdge edge)
+    {
+               // From = T0, To = T1
+        float tempDelta = edge.to.temperature - edge.from.temperature;
+        float k = edge.from.conductivity + edge.to.conductivity;
+        float t = 0.001f;
+        float tempChange = (t * -k * tempDelta) * tempDelta / 2;
+        edge.from.ApplyHeatFlow(-tempChange);
+        edge.to.ApplyHeatFlow(tempChange);
     }
 
     public void ResolveEdges()

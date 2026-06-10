@@ -6,7 +6,10 @@ public class ThermSensor : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log($"target temp is {target.temperature}");
+        if (target != null)
+        {
+            Debug.Log($"target temp is {target.temperature}");
+        }
     }
 
 }

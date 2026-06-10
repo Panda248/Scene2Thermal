@@ -13,15 +13,29 @@ public class Client : MonoBehaviour
     public String objectInferenceJson, sceneInferenceJson, SceneCategory;
     static HttpClient httpClient = new()
     {
-        BaseAddress = new Uri("http://127.0.0.1:5000")// replace w/ final url
+        BaseAddress = new Uri("http://127.0.0.1:5000") // replace w/ final url
     }; 
-
-    private void Awake()
+    static Client instance;
+    public static Client Instance()
     {
-
+        if (instance == null)
+        {
+            instance = FindAnyObjectByType<Client>();
+        }
+        return instance;
     }
 
-    public async Task RequestSceneInference() 
+    //private MultipartFormDataContent ConstructByteArrayContents(List<byte[]> files, string prefix)
+    //{
+    //    List<ByteArrayContent> list = new();
+
+    //    foreach (byte[] file in files)
+    //    {
+
+    //    }
+    //}
+
+    public async Task<String> RequestSceneInference() 
     {
         SceneScanner scanner = SceneScanner.Instance();
 
@@ -62,10 +76,11 @@ public class Client : MonoBehaviour
         Debug.Log($"{responseContent}");
         sceneInferenceJson = responseContent.ToString(); // this should have scene category
         SceneCategory = responseContent.ToString();
-        //return JsonUtility.FromJson<object>(responseContent);
+
+        return responseContent.ToString();
     }
 
-    public async Task RequestObjectInference(GameObject obj)
+    public async Task<String> RequestObjectInference(GameObject obj)
     {
         ObjectScanner scanner = ObjectScanner.Instance();
      
@@ -106,7 +121,7 @@ public class Client : MonoBehaviour
 
         // Send and Await Response
         using HttpResponseMessage response = await httpClient.PostAsync(
-            "object-inference",
+            "object-material-inference",
             content
          );
 
@@ -115,8 +130,7 @@ public class Client : MonoBehaviour
         var responseContent = await response.Content.ReadAsStringAsync();
         Debug.Log($"{responseContent}");
         objectInferenceJson = responseContent.ToString();
-        //return JsonUtility.FromJson<object>(responseContent);
+
+        return responseContent.ToString();
     }
-
-
 }
