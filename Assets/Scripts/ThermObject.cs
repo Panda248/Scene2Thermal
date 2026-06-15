@@ -1,34 +1,26 @@
 using System;
 using System.Collections.Generic;
+using JsonClasses;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public class ThermObject : MonoBehaviour
 {
-    public float conductivity, mass, specificHeat;
-    public float temperature, newTemperature;
+    const float SPEED_OF_LIGHT = 299800000;
+    const float STEFAN_BOLTZMANN_CONSTANT = 5.670f / 100000000f;
 
-    //public List<ThermObject> contacts;
+    public float conductivity, mass, specificHeat, generationRate, temperature, temperatureDelta;
+    public bool actAsHeatSource = false;
+    Collider coll;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        //if(!GetComponent<Collider>().isTrigger)
-        //{
-        //    GetComponent<Collider>().isTrigger = true;
-        //}
-        newTemperature = 0;
+        Debug.Log(STEFAN_BOLTZMANN_CONSTANT);
+        temperatureDelta = 0;
+        coll = GetComponent<Collider>();
     }
 
-    private void OnValidate()
-    {
-        //if (!GetComponent<Collider>().isTrigger)
-        //{
-        //    GetComponent<Collider>().isTrigger = true;
-        //}
-        newTemperature = 0;
-    }
-
+    
     public void SetProperties(JsonClasses.MaterialInference materialInference)
     {
         conductivity = materialInference.thermal_conductivity;
@@ -44,16 +36,48 @@ public class ThermObject : MonoBehaviour
         specificHeat = objectMaterialInference.heat_capacity;
         temperature = objectMaterialInference.initial_temperature;
     }
+
+    public void SetProperties(JsonClasses.ThermObjectProperties properties)
+    {
+        conductivity = properties.thermal_conductivity;
+        mass = properties.mass;
+        specificHeat = properties.heat_capacity;
+        generationRate = properties.heat_generation_rate;
+        temperature = properties.initial_temperature;
+        actAsHeatSource = properties.initially_on;
+    }
+
     public void ApplyHeatFlow(float heatFlow)
     {
         float deltaTemp = heatFlow / (mass * specificHeat);
         Debug.Log($"Applying heat flow of {heatFlow} to {name}. {deltaTemp} degrees");
-        newTemperature += deltaTemp;
+        temperatureDelta += deltaTemp;
     }
     public void UpdateTemperature()
     {
-        temperature += newTemperature;
-        newTemperature = 0;
+        if (actAsHeatSource) ApplyHeatFlow(generationRate * Time.fixedDeltaTime);
+        temperature += temperatureDelta;
+        temperatureDelta = 0;
+    }
+
+    void OnCollisionStay(Collision collisionInfo)
+    {
+        // Debug-draw all contact points and normals
+        Debug.Log(collisionInfo.contactCount);
+        for (int i = 0; i < collisionInfo.contactCount; i++)
+        {
+            ContactPoint contact = collisionInfo.GetContact(i);
+            Debug.DrawRay(contact.point, contact.normal, Color.white);
+        }
+    }
+
+    // Definitely inaccurate but it might pass as realistic
+    public float RadiationTemperature(Vector3 position)
+    {
+        float distanceSquared = (coll.ClosestPoint(position) - position).sqrMagnitude;
+        //Debug.Log($"The not distance squared {Mathf.Pow(temperature, 4) * STEFAN_BOLTZMANN_CONSTANT}");
+        //return Mathf.Pow(temperature, 4) * STEFAN_BOLTZMANN_CONSTANT / distanceSquared;
+        return temperature /  ((4 * Mathf.PI * distanceSquared) + 1);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -66,6 +90,7 @@ public class ThermObject : MonoBehaviour
             {
                 Debug.Log("Added edge between " + this.name + " and " + other.name);
             }
+            Physics.OverlapBox(transform.position, coll.bounds.extents, transform.rotation);
         }
     }
 

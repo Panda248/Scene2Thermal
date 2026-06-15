@@ -13,7 +13,8 @@ public class MaterialSetter : MonoBehaviour
 
     void Start()
     {
-        BatchSet();
+        //BatchSet();
+        AddThermObjects();
     }
 
     public async void BatchSet()
@@ -40,13 +41,13 @@ public class MaterialSetter : MonoBehaviour
     public async void SetMaterial(ThermObject thermObject)
     {
         string objectInferenceJson = await Client.Instance().RequestObjectInference(thermObject.gameObject);
-        JsonClasses.ObjectMaterialInference materialInference = JsonConvert.DeserializeObject<JsonClasses.ObjectMaterialInference>(objectInferenceJson);
+        JsonClasses.ThermObjectProperties materialInference = JsonConvert.DeserializeObject<JsonClasses.ThermObjectProperties>(objectInferenceJson);
         thermObject.SetProperties(materialInference);
     }
 
     public void SetMaterial(ThermObject target,string thermJson)
     {
-        JsonClasses.ObjectMaterialInference materialInference = JsonConvert.DeserializeObject<JsonClasses.ObjectMaterialInference>(thermJson);
+        JsonClasses.ThermObjectProperties materialInference = JsonConvert.DeserializeObject<JsonClasses.ThermObjectProperties>(thermJson);
         target.SetProperties(materialInference);
     }
 

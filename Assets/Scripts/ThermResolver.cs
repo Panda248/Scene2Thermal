@@ -90,15 +90,22 @@ public class ThermResolver : MonoBehaviour
         edge.to.ApplyHeatFlow(qt);
     }
 
-    void ResolveEdgeLump(ThermEdge edge)
+    // Not good for scale. kd tree?
+    public ThermObject ClosestThermObject(Vector3 position)
     {
-               // From = T0, To = T1
-        float tempDelta = edge.to.temperature - edge.from.temperature;
-        float k = edge.from.conductivity + edge.to.conductivity;
-        float t = 0.001f;
-        float tempChange = (t * -k * tempDelta) * tempDelta / 2;
-        edge.from.ApplyHeatFlow(-tempChange);
-        edge.to.ApplyHeatFlow(tempChange);
+        ThermObject result = null;
+        float distance = Mathf.Infinity;
+        foreach (ThermObject obj in graph.thermObjects)
+        {
+            float dist = (obj.transform.position - position).sqrMagnitude;
+            if (dist < distance)
+            {
+                distance = dist;
+                result = obj;
+            }
+        }
+
+        return result;
     }
 
     public void ResolveEdges()
