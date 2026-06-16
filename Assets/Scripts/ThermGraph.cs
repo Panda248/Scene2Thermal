@@ -46,4 +46,11 @@ public class ThermGraph
         }
         return false;
     }
+
+    public void Clear()
+    {
+        thermObjects.Clear();
+        edges.Clear();
+    }
+
 }

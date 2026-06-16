@@ -15,33 +15,44 @@ public class ThermObject : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log(STEFAN_BOLTZMANN_CONSTANT);
+        //Debug.Log(STEFAN_BOLTZMANN_CONSTANT);
         temperatureDelta = 0;
         coll = GetComponent<Collider>();
     }
 
-    
-    public void SetProperties(JsonClasses.MaterialInference materialInference)
+    private void OnValidate()
     {
-        conductivity = materialInference.thermal_conductivity;
-        mass = materialInference.mass;
-        specificHeat = materialInference.specific_heat;
-        temperature = materialInference.temperature;
+        if(specificHeat == 0)
+        {
+            specificHeat = 1;
+        }
+        if(mass == 0)
+        {
+            mass = 1;
+        }
     }
 
-    public void SetProperties(JsonClasses.ObjectMaterialInference objectMaterialInference)
-    {
-        conductivity = objectMaterialInference.thermal_conductivity;
-        mass = objectMaterialInference.mass;
-        specificHeat = objectMaterialInference.heat_capacity;
-        temperature = objectMaterialInference.initial_temperature;
-    }
+    //public void SetProperties(JsonClasses.MaterialInference materialInference)
+    //{
+    //    conductivity = materialInference.thermal_conductivity;
+    //    mass = materialInference.mass;
+    //    specificHeat = materialInference.specific_heat;
+    //    temperature = materialInference.temperature;
+    //}
+
+    //public void SetProperties(JsonClasses.ObjectMaterialInference objectMaterialInference)
+    //{
+    //    conductivity = objectMaterialInference.thermal_conductivity;
+    //    mass = objectMaterialInference.mass;
+    //    specificHeat = objectMaterialInference.heat_capacity;
+    //    temperature = objectMaterialInference.initial_temperature;
+    //}
 
     public void SetProperties(JsonClasses.ThermObjectProperties properties)
     {
         conductivity = properties.thermal_conductivity;
-        mass = properties.mass;
-        specificHeat = properties.heat_capacity;
+        mass = properties.mass == 0 ? 1 : properties.mass;
+        specificHeat = properties.heat_capacity == 0 ? 1 : properties.heat_capacity;
         generationRate = properties.heat_generation_rate;
         temperature = properties.initial_temperature;
         actAsHeatSource = properties.initially_on;
