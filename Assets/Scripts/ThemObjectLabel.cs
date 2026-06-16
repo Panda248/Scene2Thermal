@@ -1,0 +1,24 @@
+using TMPro;
+using UnityEngine;
+
+[RequireComponent(typeof(ThermObject))]
+public class ThemObjectLabel : MonoBehaviour
+{
+    public TextMeshPro tmp;
+    ThermObject thermObject;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
+        thermObject = GetComponent<ThermObject>();
+        if(tmp == null)
+        {
+            tmp = GetComponentInChildren<TextMeshPro>();
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        tmp.text = $"{thermObject.name}\n{thermObject.temperature:F2}°C";
+    }
+}

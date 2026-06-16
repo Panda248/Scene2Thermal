@@ -12,5 +12,9 @@ public class ThermalResolverEditor : Editor
             ((ThermResolver)target).ResolveEdges();
             ((ThermResolver)target).UpdateObjects();
         }
+        if(GUILayout.Button("Reset Graph"))
+        {
+            ((ThermResolver)target).ResetGraph();
+        }
     }
 }
