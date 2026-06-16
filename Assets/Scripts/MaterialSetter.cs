@@ -36,6 +36,8 @@ public class MaterialSetter : MonoBehaviour
             string objectInferenceJson = await task.Item1;
             SetMaterial(task.Item2, objectInferenceJson);
         }
+
+        Debug.Log("BatchSet complete");
     }
 
     public async void SetMaterial(ThermObject thermObject)
