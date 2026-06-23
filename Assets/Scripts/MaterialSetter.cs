@@ -10,16 +10,16 @@ public class MaterialSetter : MonoBehaviour
     public Transform environmentParent;
     string sceneCategory;
     public ThermObject targetObject;
-    public bool batchAtStart;
+    //public bool batchAtStart;
 
-    void Start()
-    {
-        AddThermObjects();
-        if (batchAtStart)
-        {
-            BatchSet();
-        }
-    }
+    //void Start()
+    //{
+    //    AddThermObjects();
+    //    if (batchAtStart)
+    //    {
+    //        BatchSet();
+    //    }
+    //}
 
     public async void BatchSet()
     {
@@ -30,7 +30,10 @@ public class MaterialSetter : MonoBehaviour
 
         foreach (Transform child in environmentParent)
         {
-            // find better way
+            if (child.gameObject.GetComponent<ThermObject>() == null)
+            {
+                child.gameObject.AddComponent<ThermObject>();
+            }
             objectInferenceTasks.Add(new(Client.Instance().RequestObjectInference(child.gameObject),
                 child.gameObject.GetComponent<ThermObject>()));
         }

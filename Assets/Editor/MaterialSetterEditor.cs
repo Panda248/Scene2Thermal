@@ -20,9 +20,6 @@ public class MaterialSetterEditor : Editor
         {
             ((MaterialSetter)target).SetMaterial(((MaterialSetter)target).targetObject, ((MaterialSetter)target).sampleJson);
         }
-        {
-            ThermResolver.Instance().freeze = !ThermResolver.Instance().freeze;
-        }
         if (GUILayout.Button("Add ThermObjects"))
         {
             ((MaterialSetter)target).AddThermObjects();

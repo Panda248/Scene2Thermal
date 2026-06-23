@@ -10,20 +10,20 @@ public class BatchScan : MonoBehaviour
     public Transform environmentParent;
     public bool saveToDisk, runAtStart;
     bool started;
-    public void ScanAll(bool saveToDisk)
+    public void ScanAll(bool saveToDisk=false)
     {
         ScanScene(saveToDisk);
         ScanObjects(saveToDisk);
     }
 
-    public void ScanScene(bool saveToDisk)
+    public void ScanScene(bool saveToDisk=false)
     {
         Debug.Log($"Scanning {environmentParent.childCount} objects");
         SceneScanner.Instance().environmentParent = environmentParent;
         SceneScanner.Instance().Scan(saveToDisk);
     }
 
-    public void ScanObjects(bool saveToDisk)
+    public void ScanObjects(bool saveToDisk=false)
     {
         for (int i = 0; i < environmentParent.childCount; i++)
         {

@@ -1,9 +1,22 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Client))]
+[RequireComponent(typeof(BatchScan))]
+[RequireComponent(typeof(MaterialSetter))]
 public class InferenceManager : MonoBehaviour
 {
-    bool runStartup;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public bool runStartup;
+    public Transform environmentParent;
+    public MaterialSetter materialSetter;
+    public BatchScan batchScan;
+
+    private void Awake()
+    {
+        materialSetter = GetComponent<MaterialSetter>();
+        batchScan = GetComponent<BatchScan>();
+        materialSetter.environmentParent = environmentParent;
+        batchScan.environmentParent = environmentParent;
+    }
     void Start()
     {
         if(runStartup)
@@ -14,6 +27,8 @@ public class InferenceManager : MonoBehaviour
 
     public void RunStartup()
     {
-
+        batchScan.ScanAll();
+        materialSetter.BatchSet();
+        ThermResolver.Instance().ResetGraph();
     }
 }

@@ -61,7 +61,7 @@ public class ThermObject : MonoBehaviour
 
     public void ApplyHeatFlow(float heatFlow)
     {
-        float deltaTemp = heatFlow * Time.fixedDeltaTime / (mass * specificHeat);
+        float deltaTemp = heatFlow / (mass * specificHeat);
         Debug.Log($"{name}: ApplyHeatFlow heatFlow={heatFlow}, deltaTemp={deltaTemp}");
         temperatureDelta += deltaTemp;
     }
