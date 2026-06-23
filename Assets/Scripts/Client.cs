@@ -71,7 +71,7 @@ public class Client : MonoBehaviour
         // Send and await response
         using HttpResponseMessage response = await httpClient.PostAsync("scene-inference", content);
 
-        //response.EnsureSuccessStatusCode();
+        response.EnsureSuccessStatusCode();
 
         var responseContent = await response.Content.ReadAsStringAsync();
         Debug.Log($"{responseContent}");
@@ -126,7 +126,7 @@ public class Client : MonoBehaviour
             content
          );
 
-        //response.EnsureSuccessStatusCode();
+        response.EnsureSuccessStatusCode();
 
         var responseContent = await response.Content.ReadAsStringAsync();
         Debug.Log($"{responseContent}");
