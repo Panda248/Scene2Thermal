@@ -4,7 +4,7 @@ public class ThermResolver : MonoBehaviour
 {
     public ThermGraph graph;
     public bool freeze;
-    public float smallestTempDelta = 0.001f;
+    public float smallestTempDelta = 0f;
 
     static ThermResolver instance;
     public static ThermResolver Instance()
@@ -27,6 +27,7 @@ public class ThermResolver : MonoBehaviour
     {
         graph.Clear();
         graph.thermObjects.AddRange(FindObjectsByType<ThermObject>());
+        Debug.Log(graph.thermObjects.Count + " ThermObjects found.");
     }
 
     // Update is called once per frame
@@ -38,14 +39,8 @@ public class ThermResolver : MonoBehaviour
          * Decide which are Thermobjects.
          * Get their temperatures and thermal conductivities.
          */
-        foreach(ThermEdge edge in graph.edges)
-        {
-            ResolveEdgeFourier(edge);
-        }
-        foreach(ThermObject obj in graph.thermObjects)
-        {
-            obj.UpdateTemperature();
-        }
+        ResolveEdges();
+        UpdateObjects();
     }
 
     /* 
@@ -85,7 +80,10 @@ public class ThermResolver : MonoBehaviour
         Debug.Log($"{edge.to.name} temp: {edge.to.temperature}, conductivity: {edge.to.conductivity}");
 
         float tempDelta = edge.to.temperature - edge.from.temperature;
-        if(tempDelta < 0.0001f) return;
+        if(Mathf.Abs(tempDelta) < smallestTempDelta)
+        {
+            return;
+        }
         float k = edge.from.conductivity + edge.to.conductivity;
         float t = 0.001f;
         float flux = -k * tempDelta;

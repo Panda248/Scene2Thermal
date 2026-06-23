@@ -10,11 +10,15 @@ public class MaterialSetter : MonoBehaviour
     public Transform environmentParent;
     string sceneCategory;
     public ThermObject targetObject;
+    public bool batchAtStart;
 
     void Start()
     {
-        //BatchSet();
         AddThermObjects();
+        if (batchAtStart)
+        {
+            BatchSet();
+        }
     }
 
     public async void BatchSet()
