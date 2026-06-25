@@ -56,6 +56,7 @@ public class MaterialSetter : MonoBehaviour
 
     public void SetMaterial(ThermObject target,string thermJson)
     {
+        Debug.Log($"{target.gameObject.name} received JSON: {thermJson}");
         JsonClasses.ThermObjectProperties materialInference = JsonConvert.DeserializeObject<JsonClasses.ThermObjectProperties>(thermJson);
         target.SetProperties(materialInference);
     }

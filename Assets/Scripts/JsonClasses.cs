@@ -36,7 +36,7 @@ namespace JsonClasses
 
     public class ThermObjectProperties
     {
-        public string object_category, object_category_reason, material_category, material_justification, heat_source_justification;
+        public string object_category, object_category_justification, material_category, material_justification, heat_source_justification;
         public float heat_capacity, heat_generation_rate, thermal_conductivity, mass, initial_temperature;
         public bool toggleable, initially_on;
     }
