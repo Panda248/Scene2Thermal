@@ -50,7 +50,7 @@ public class ThermObject : MonoBehaviour
 
     public void SetProperties(JsonClasses.ThermObjectProperties properties)
     {
-        Debug.Log($"{name}: SetProperties");
+        //Debug.Log($"{name}: SetProperties");
         conductivity = properties.thermal_conductivity;
         mass = properties.mass == 0 ? 1 : properties.mass;
         specificHeat = properties.heat_capacity == 0 ? 1 : properties.heat_capacity;
@@ -62,13 +62,13 @@ public class ThermObject : MonoBehaviour
     public void ApplyHeatFlow(float heatFlow)
     {
         float deltaTemp = heatFlow / (mass * specificHeat);
-        Debug.Log($"{name}: ApplyHeatFlow heatFlow={heatFlow}, deltaTemp={deltaTemp}");
+        //Debug.Log($"{name}: ApplyHeatFlow heatFlow={heatFlow}, deltaTemp={deltaTemp}");
         temperatureDelta += deltaTemp;
     }
     public void UpdateTemperature()
     {
         if (actAsHeatSource) {
-            Debug.Log($"{name}: acting as heat source");
+            //Debug.Log($"{name}: acting as heat source");
             ApplyHeatFlow(generationRate);
         }
         temperature += temperatureDelta;
@@ -91,7 +91,7 @@ public class ThermObject : MonoBehaviour
     {
         float distanceSquared = (coll.ClosestPoint(position) - position).sqrMagnitude;
         float result = temperature /  ((4 * Mathf.PI * distanceSquared) + 1);
-        Debug.Log($"{name}: RadiationTemperature at {position} distanceSquared={distanceSquared}, result={result}");
+        //Debug.Log($"{name}: RadiationTemperature at {position} distanceSquared={distanceSquared}, result={result}");
         return result;
     }
 
@@ -103,7 +103,7 @@ public class ThermObject : MonoBehaviour
             bool added = ThermResolver.Instance().graph.AddEdge(this, other);
             if (added)
             {
-                Debug.Log("Added edge between " + this.name + " and " + other.name);
+                //Debug.Log("Added edge between " + this.name + " and " + other.name);
             }
             //Physics.OverlapBox(transform.position, coll.bounds.extents, transform.rotation);
         }
@@ -117,7 +117,7 @@ public class ThermObject : MonoBehaviour
             bool removed = ThermResolver.Instance().graph.RemoveEdge(this, other);
             if (removed)
             {
-                Debug.Log("Removed edge between " + this.name + " and " + other.name);
+                //Debug.Log("Removed edge between " + this.name + " and " + other.name);
             }
         }
     }
