@@ -55,7 +55,7 @@ public class Client : MonoBehaviour
             name = scanner.environmentParent.name,
         });
         using StringContent name = new(nameJson, System.Text.Encoding.UTF8, "application/json");
-        Debug.Log(nameJson);
+        //Debug.Log(nameJson);
 
 
         // Put everything together
@@ -74,9 +74,9 @@ public class Client : MonoBehaviour
         response.EnsureSuccessStatusCode();
 
         var responseContent = await response.Content.ReadAsStringAsync();
-        Debug.Log($"{responseContent}");
-        sceneInferenceJson = responseContent.ToString(); // this should have scene category
-        SceneCategory = responseContent.ToString();
+        //Debug.Log($"{responseContent}");
+        //sceneInferenceJson = responseContent.ToString(); // this should have scene category
+        //SceneCategory = responseContent.ToString();
 
         return responseContent.ToString();
     }
@@ -91,8 +91,8 @@ public class Client : MonoBehaviour
         List < byte[]> isoScans = scanner.isoScans[obj.name];
         List < byte[]> contextScans = scanner.contextScans[obj.name];
 
-        Debug.Log($"iso has{isoScans.Count}");
-        Debug.Log($"context has{contextScans.Count}");
+        //Debug.Log($"iso has{isoScans.Count}");
+        //Debug.Log($"context has{contextScans.Count}");
 
         // Store Object data into json
         string objContentJson = JsonConvert.SerializeObject(new
@@ -104,7 +104,7 @@ public class Client : MonoBehaviour
         });
         using StringContent objContent = new (objContentJson, System.Text.Encoding.UTF8, "application/json");
 
-        Debug.Log(objContentJson);
+        //Debug.Log(objContentJson);
         
         // Build final packet
         using MultipartFormDataContent content = new();
@@ -114,8 +114,8 @@ public class Client : MonoBehaviour
         // Add Images
         for (int i = 0; i < isoScans.Count; i++)
         {
-            Debug.Log($"iso bytes: {isoScans[i].Length}");
-            Debug.Log($"context bytes: {contextScans[i].Length}");
+            //Debug.Log($"iso bytes: {isoScans[i].Length}");
+            //Debug.Log($"context bytes: {contextScans[i].Length}");
             content.Add(new ByteArrayContent(isoScans[i]), $"iso{i+1}", $"iso{i+1}.jpg");
             content.Add(new ByteArrayContent(contextScans[i]), $"context{i+1}", $"context{i+1}.jpg");
         }
@@ -129,7 +129,7 @@ public class Client : MonoBehaviour
         response.EnsureSuccessStatusCode();
 
         var responseContent = await response.Content.ReadAsStringAsync();
-        Debug.Log($"{responseContent}");
+        //Debug.Log($"{responseContent}");
         objectInferenceJson = responseContent.ToString();
 
         return responseContent.ToString();

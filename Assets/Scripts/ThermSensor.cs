@@ -14,7 +14,7 @@ public class ThermSensor : MonoBehaviour
         //    Debug.Log($"target temp is {target.temperature}");
         //    Debug.Log($"radiation temp is {target.RadiationTemperature((transform.position - target.transform.position).sqrMagnitude)}");
         //}
-        radiationTemp = target.RadiationTemperature(transform.position);
+        radiationTemp = target.RadiationTemperature(transform.position); // TODO: this must check with nearest thermobject
     }
 
 }

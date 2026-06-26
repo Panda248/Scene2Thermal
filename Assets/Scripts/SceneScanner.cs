@@ -77,8 +77,9 @@ public class SceneScanner : MonoBehaviour
         List<RaycastHit> hits;
         Vector3 center = GetSceneCenter();
         Vector3 origin = scan.transform.position;
-        Ray ray = new Ray(origin, center - origin);
-        hits = new List<RaycastHit>(Physics.RaycastAll(ray, (center - origin).magnitude));
+        Vector3 centerAdjusted = Vector3.Lerp(center, origin, 0.1f);
+        Ray ray = new Ray(origin, centerAdjusted - origin);
+        hits = new List<RaycastHit>(Physics.RaycastAll(ray, (centerAdjusted - origin).magnitude));
 
         foreach(RaycastHit hit in hits)
         {

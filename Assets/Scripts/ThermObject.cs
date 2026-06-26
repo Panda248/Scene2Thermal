@@ -12,11 +12,13 @@ public class ThermObject : MonoBehaviour
     public float conductivity, mass, specificHeat, generationRate, temperature, temperatureDelta, volume;
     public bool actAsHeatSource;
     Collider coll;
+    Rigidbody rb;
 
     void Awake()
     {
         temperatureDelta = 0;
         coll = GetComponent<Collider>();
+        rb = GetComponent<Rigidbody>();
         volume = coll.bounds.size.x * coll.bounds.size.y * coll.bounds.size.z;
     }
 
@@ -53,6 +55,7 @@ public class ThermObject : MonoBehaviour
         //Debug.Log($"{name}: SetProperties");
         conductivity = properties.thermal_conductivity;
         mass = properties.mass == 0 ? 1 : properties.mass;
+        rb.mass = mass/1000f;
         specificHeat = properties.heat_capacity == 0 ? 1 : properties.heat_capacity;
         generationRate = properties.heat_generation_rate;
         temperature = properties.initial_temperature;

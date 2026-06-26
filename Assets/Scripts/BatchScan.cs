@@ -18,7 +18,7 @@ public class BatchScan : MonoBehaviour
 
     public void ScanScene(bool saveToDisk=false)
     {
-        Debug.Log($"Scanning {environmentParent.childCount} objects");
+        //Debug.Log($"Scanning {environmentParent.childCount} objects");
         SceneScanner.Instance().environmentParent = environmentParent;
         SceneScanner.Instance().Scan(saveToDisk);
     }

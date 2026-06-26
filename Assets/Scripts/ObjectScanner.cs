@@ -16,7 +16,6 @@ public class ObjectScanner : MonoBehaviour
     private int scanObjectPrevLayer = 0;
     List<GameObject> culled;
 
-    // TODO: i dont think i shoudl do this. probably make it a param for scan
     public GameObject ScanObject {  get { return scanObject; }
         set
         {
@@ -30,7 +29,10 @@ public class ObjectScanner : MonoBehaviour
 
             if(value != null)
             {
-                transform.position = scanObject.transform.position;
+
+                transform.position = scanObject.transform.position + scanObject.GetComponent<Rigidbody>().centerOfMass;
+
+                //transform.position = scanObject.transform.position;
                 scanObject.layer = 6;
             }
         }
@@ -72,7 +74,11 @@ public class ObjectScanner : MonoBehaviour
         
         contextScans.Add(scanObject.name, new());
         isoScans.Add(scanObject.name, new());
-        isoCamera.transform.localPosition = Vector3.back * CullUtility.GetTargetDistance(isoCamera.fieldOfView, scanObject.GetComponent<Renderer>().bounds, 0.6f);
+
+        Vector3 contextOffset = CullUtility.GetTargetDistance(contextCamera.fieldOfView, scanObject.GetComponent<Renderer>().bounds, 0.3f) * Vector3.back;
+        contextCamera.transform.localPosition = contextOffset;
+        Vector3 isoOffset = CullUtility.GetTargetDistance(contextCamera.fieldOfView, scanObject.GetComponent<Renderer>().bounds, 0.6f) * Vector3.back;
+        isoCamera.transform.localPosition = isoOffset;
 
         for (int i = 0; i < 4; i++)
         {
@@ -116,7 +122,7 @@ public class ObjectScanner : MonoBehaviour
     void Cull()
     {
         List<RaycastHit> hits;
-        Vector3 center = scanObject.transform.position;
+        Vector3 center = scanObject.transform.position + scanObject.GetComponent<Rigidbody>().centerOfMass;
         Vector3 origin = contextCamera.transform.position;
         Ray ray = new Ray(origin, center - origin);
         hits = new List<RaycastHit>(Physics.RaycastAll(ray, (center - origin).magnitude));

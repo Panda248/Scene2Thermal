@@ -75,9 +75,9 @@ public class ThermResolver : MonoBehaviour
     void ResolveEdgeFourier(ThermEdge edge)
     {
         // From = T0, To = T1
-        Debug.Log($"Resolving edge from {edge.from.name} to {edge.to.name}");
-        Debug.Log($"{edge.from.name} temp: {edge.from.temperature}, conductivity: {edge.from.conductivity}");
-        Debug.Log($"{edge.to.name} temp: {edge.to.temperature}, conductivity: {edge.to.conductivity}");
+        //Debug.Log($"Resolving edge from {edge.from.name} to {edge.to.name}");
+        //Debug.Log($"{edge.from.name} temp: {edge.from.temperature}, conductivity: {edge.from.conductivity}");
+        //Debug.Log($"{edge.to.name} temp: {edge.to.temperature}, conductivity: {edge.to.conductivity}");
 
         float tempDelta = edge.to.temperature - edge.from.temperature;
         if(Mathf.Abs(tempDelta) < smallestTempDelta)
@@ -89,7 +89,7 @@ public class ThermResolver : MonoBehaviour
         float flux = -k * tempDelta;
         float qt = flux * t;
 
-        Debug.Log($"tempDelta: {tempDelta}, k: {k}, flux: {flux}, qt: {qt}");
+        //Debug.Log($"tempDelta: {tempDelta}, k: {k}, flux: {flux}, qt: {qt}");
 
         edge.from.ApplyHeatFlow(-qt);
         edge.to.ApplyHeatFlow(qt);
