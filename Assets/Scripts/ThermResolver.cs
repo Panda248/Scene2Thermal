@@ -18,11 +18,6 @@ public class ThermResolver : MonoBehaviour
         graph = new ThermGraph();
     }
 
-    private void Start()
-    {
-        ResetGraph();
-    }
-
     public void ResetGraph()
     {
         graph.Clear();
