@@ -1,15 +1,18 @@
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(ThermObject))]
+//[RequireComponent(typeof(ThermObject))]
 public class ThemObjectLabel : MonoBehaviour
 {
     public TextMeshPro tmp;
-    ThermObject thermObject;
+    public ThermObject thermObject;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        thermObject = GetComponent<ThermObject>();
+        if(thermObject == null)
+        {
+            thermObject = GetComponent<ThermObject>();
+        }
         if(tmp == null)
         {
             tmp = GetComponentInChildren<TextMeshPro>();
