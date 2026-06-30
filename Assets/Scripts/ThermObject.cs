@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using JsonClasses;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(Collider))]
+//[RequireComponent(typeof(Collider))]
 public class ThermObject : MonoBehaviour
 {
     const float SPEED_OF_LIGHT = 299800000;
@@ -11,15 +12,15 @@ public class ThermObject : MonoBehaviour
 
     public float conductivity, mass, specificHeat, generationRate, temperature, temperatureDelta, volume;
     public bool actAsHeatSource;
-    Collider coll;
+    //Collider coll;
     Rigidbody rb;
 
     void Awake()
     {
         temperatureDelta = 0;
-        coll = GetComponent<Collider>();
+        //coll = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
-        volume = coll.bounds.size.x * coll.bounds.size.y * coll.bounds.size.z;
+        //volume = coll.bounds.size.x * coll.bounds.size.y * coll.bounds.size.z;
     }
 
     private void OnValidate()
@@ -92,7 +93,7 @@ public class ThermObject : MonoBehaviour
     // Definitely inaccurate but it might pass as realistic
     public float RadiationTemperature(Vector3 position)
     {
-        float distanceSquared = (coll.ClosestPoint(position) - position).sqrMagnitude;
+        float distanceSquared = (rb.ClosestPointOnBounds(position) - position).sqrMagnitude;
         float result = temperature /  ((4 * Mathf.PI * distanceSquared) + 1);
         //Debug.Log($"{name}: RadiationTemperature at {position} distanceSquared={distanceSquared}, result={result}");
         return result;
@@ -100,13 +101,14 @@ public class ThermObject : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        ThermObject other = collision.gameObject.GetComponent<ThermObject>();
+        //ThermObject other = collision.gameObject.GetComponent<ThermObject>();
+        ThermObject other = collision.gameObject.GetComponentInParent<ThermObject>();
         if (other != null && ThermResolver.Instance().graph.GetEdge(this, other) == null)
         {
             bool added = ThermResolver.Instance().graph.AddEdge(this, other);
             if (added)
             {
-                //Debug.Log("Added edge between " + this.name + " and " + other.name);
+                Debug.Log("Added edge between " + this.name + " and " + other.name);
             }
             //Physics.OverlapBox(transform.position, coll.bounds.extents, transform.rotation);
         }
@@ -114,17 +116,16 @@ public class ThermObject : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        ThermObject other = collision.gameObject.GetComponent<ThermObject>();
+        //ThermObject other = collision.gameObject.GetComponent<ThermObject>();
+        ThermObject other = collision.gameObject.GetComponentInParent<ThermObject>();
         if (other != null)
         {
             bool removed = ThermResolver.Instance().graph.RemoveEdge(this, other);
             if (removed)
             {
-                //Debug.Log("Removed edge between " + this.name + " and " + other.name);
+                Debug.Log("Removed edge between " + this.name + " and " + other.name);
             }
         }
     }
-
-    
 
 }
