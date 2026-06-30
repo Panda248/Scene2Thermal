@@ -11,7 +11,7 @@ public class ThemObjectLabel : MonoBehaviour
     {
         if(thermObject == null)
         {
-            thermObject = GetComponent<ThermObject>();
+            thermObject = GetComponentInParent<ThermObject>();
         }
         if(tmp == null)
         {
