@@ -11,8 +11,8 @@ public class ObjectScanner : MonoBehaviour
     private GameObject scanObject;
     public RenderTexture isoOutput,contextOutput;
     public Texture2D isoTexture, contextTexture;
-    public Dictionary<string, List<byte[]>> contextScans;
-    public Dictionary<string, List<byte[]>> isoScans;
+    public Dictionary<EntityId, List<byte[]>> contextScans;
+    public Dictionary<EntityId, List<byte[]>> isoScans;
     private int scanObjectPrevLayer = 0;
     List<GameObject> culled;
 
@@ -71,9 +71,10 @@ public class ObjectScanner : MonoBehaviour
     public void Scan(bool saveToDisk)
     {
         Debug.Log($"Scanning {scanObject.name}");
+        EntityId scanObjectId = scanObject.GetEntityId();
         
-        contextScans.Add(scanObject.name, new());
-        isoScans.Add(scanObject.name, new());
+        contextScans.Add(scanObjectId, new List<byte[]>());
+        isoScans.Add(scanObjectId, new List<byte[]>());
 
         Vector3 contextOffset = CullUtility.GetTargetDistance(contextCamera.fieldOfView, scanObject.GetComponent<Renderer>().bounds, 0.3f) * Vector3.back;
         contextCamera.transform.localPosition = contextOffset;
@@ -92,7 +93,7 @@ public class ObjectScanner : MonoBehaviour
                 isoTexture.ReadPixels(new Rect(0, 0, isoOutput.width, isoOutput.height), 0, 0);
                 isoTexture.Apply();
                 
-                isoScans[scanObject.name].Add(isoTexture.EncodeToJPG());
+                isoScans[scanObjectId].Add(isoTexture.EncodeToJPG());
                 
                 if (saveToDisk) File.WriteAllBytes($"Assets/Scans/{scanObject.name}_iso_scan{hRotator.rotateIndex}{vRotator.rotateIndex}.png", isoTexture.EncodeToPNG());
 
@@ -106,7 +107,7 @@ public class ObjectScanner : MonoBehaviour
                 contextTexture.ReadPixels(new Rect(0, 0, contextOutput.width, contextOutput.height), 0, 0);
                 contextTexture.Apply();
                 
-                contextScans[scanObject.name].Add(contextTexture.EncodeToJPG());
+                contextScans[scanObjectId].Add(contextTexture.EncodeToJPG());
                 
                 if (saveToDisk) File.WriteAllBytes($"Assets/Scans/{scanObject.name}_context_scan{hRotator.rotateIndex}{vRotator.rotateIndex}.png", contextTexture.EncodeToPNG());
                 //UnCull();

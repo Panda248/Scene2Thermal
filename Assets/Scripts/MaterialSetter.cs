@@ -21,7 +21,7 @@ public class MaterialSetter : MonoBehaviour
     //    }
     //}
 
-    public async void BatchSet()
+    public async Task BatchSet()
     {
         sceneCategory = await Client.Instance().RequestSceneInference();
         Client.Instance().SceneCategory = sceneCategory;

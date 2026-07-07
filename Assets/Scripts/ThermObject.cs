@@ -4,7 +4,7 @@ using JsonClasses;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//[RequireComponent(typeof(Collider))]
+//[RequireComponent(typeof(Rigidbody))]
 public class ThermObject : MonoBehaviour
 {
     const float SPEED_OF_LIGHT = 299800000;
@@ -21,6 +21,11 @@ public class ThermObject : MonoBehaviour
         //coll = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         //volume = coll.bounds.size.x * coll.bounds.size.y * coll.bounds.size.z;
+    }
+
+    private void Start()
+    {
+        ThermResolver.Instance().graph.thermObjects.Add(this);
     }
 
     private void OnValidate()
@@ -56,7 +61,7 @@ public class ThermObject : MonoBehaviour
         //Debug.Log($"{name}: SetProperties");
         conductivity = properties.thermal_conductivity;
         mass = properties.mass == 0 ? 1 : properties.mass;
-        rb.mass = mass/1000f;
+        if(rb != null) rb.mass = mass/1000f;
         specificHeat = properties.heat_capacity == 0 ? 1 : properties.heat_capacity;
         generationRate = properties.heat_generation_rate;
         temperature = properties.initial_temperature;
@@ -69,12 +74,24 @@ public class ThermObject : MonoBehaviour
         //Debug.Log($"{name}: ApplyHeatFlow heatFlow={heatFlow}, deltaTemp={deltaTemp}");
         temperatureDelta += deltaTemp;
     }
+
+    public void ApplyCooling()
+    {
+        // Newton's law of cooling: dT/dt = -h * (T - T_environment)
+        // where h is the heat transfer coefficient (conductivity)
+        float environmentTemperature = ThermEnvironment.Instance().temperature;
+        float temperatureDifference = temperature - environmentTemperature;
+        float coolingRate = -conductivity * temperatureDifference;
+        float deltaTemp = coolingRate / (mass * specificHeat);
+        temperatureDelta += deltaTemp;
+    }
     public void UpdateTemperature()
     {
         if (actAsHeatSource) {
             //Debug.Log($"{name}: acting as heat source");
             ApplyHeatFlow(generationRate);
         }
+        ApplyCooling();
         temperature += temperatureDelta;
         temperatureDelta = 0;
     }

@@ -88,8 +88,8 @@ public class Client : MonoBehaviour
         if (scanner == null) Debug.LogError("Object Scanner is Missing");
 
         // Grab images associated with obj
-        List < byte[]> isoScans = scanner.isoScans[obj.name];
-        List < byte[]> contextScans = scanner.contextScans[obj.name];
+        List < byte[]> isoScans = scanner.isoScans[obj.GetEntityId()];
+        List < byte[]> contextScans = scanner.contextScans[obj.GetEntityId()];
 
         //Debug.Log($"iso has{isoScans.Count}");
         //Debug.Log($"context has{contextScans.Count}");

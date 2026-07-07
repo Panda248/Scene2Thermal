@@ -25,12 +25,12 @@ public class InferenceManager : MonoBehaviour
         }
     }
 
-    public void RunStartup()
+    public async void RunStartup()
     {
         ThermResolver.Instance().freeze = true;
         batchScan.ScanAll();
-        materialSetter.BatchSet();
-        ThermResolver.Instance().ResetGraph();
+        await materialSetter.BatchSet();
+        //ThermResolver.Instance().ResetGraph();
         ThermResolver.Instance().freeze = false;
     }
 }

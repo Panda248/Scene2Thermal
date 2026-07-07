@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 
 public class ThermResolver : MonoBehaviour
@@ -80,7 +81,7 @@ public class ThermResolver : MonoBehaviour
             return;
         }
         float k = edge.from.conductivity + edge.to.conductivity;
-        float t = 0.001f;
+        float t = 0.01f;
         float flux = -k * tempDelta;
         float qt = flux * t;
 
@@ -110,9 +111,10 @@ public class ThermResolver : MonoBehaviour
 
     public void ResolveEdges()
     {
-        foreach(ThermEdge edge in graph.edges)
-            {
-                ResolveEdgeFourier(edge);
+        ThermEdge[] edges = graph.edges.ToArray();
+        foreach (ThermEdge edge in edges)
+        {
+            ResolveEdgeFourier(edge);
         }
     }
     public void UpdateObjects()
