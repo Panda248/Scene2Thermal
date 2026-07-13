@@ -41,4 +41,11 @@ public class ThemObjectLabel : MonoBehaviour
             thermObject = obj;
         }
     }
+    public void OnHoveredExit(HoverExitEventArgs args)
+    {
+        if (args.interactableObject.transform.gameObject.TryGetComponent<ThermObject>(out ThermObject obj) && obj == thermObject)
+        {
+            thermObject = null;
+        }
+    }
 }

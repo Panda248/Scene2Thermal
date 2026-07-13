@@ -13,7 +13,7 @@ public class ThermObject : MonoBehaviour
     public float conductivity, mass, specificHeat, generationRate, temperature, temperatureDelta, volume;
     public bool actAsHeatSource;
     //Collider coll;
-    Rigidbody rb;
+    public Rigidbody rb;
 
     void Awake()
     {
@@ -75,17 +75,17 @@ public class ThermObject : MonoBehaviour
         temperatureDelta += deltaTemp;
     }
 
-    public void ApplyCooling()
+    public virtual void ApplyCooling()
     {
         // Newton's law of cooling: dT/dt = -h * (T - T_environment)
         // where h is the heat transfer coefficient (conductivity)
         float environmentTemperature = ThermEnvironment.Instance().temperature;
         float temperatureDifference = temperature - environmentTemperature;
         float coolingRate = -conductivity * temperatureDifference;
-        float deltaTemp = coolingRate / (mass * specificHeat);
+        float deltaTemp = coolingRate * 0.02f / (mass * specificHeat);
         temperatureDelta += deltaTemp;
     }
-    public void UpdateTemperature()
+    public virtual void UpdateTemperature()
     {
         if (actAsHeatSource) {
             //Debug.Log($"{name}: acting as heat source");
@@ -107,14 +107,7 @@ public class ThermObject : MonoBehaviour
     //    //}
     //}
 
-    // Definitely inaccurate but it might pass as realistic
-    public float RadiationTemperature(Vector3 position)
-    {
-        float distanceSquared = (rb.ClosestPointOnBounds(position) - position).sqrMagnitude;
-        float result = temperature /  ((4 * Mathf.PI * distanceSquared) + 1);
-        //Debug.Log($"{name}: RadiationTemperature at {position} distanceSquared={distanceSquared}, result={result}");
-        return result;
-    }
+    
 
     private void OnCollisionEnter(Collision collision)
     {
