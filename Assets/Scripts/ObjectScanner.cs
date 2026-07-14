@@ -98,7 +98,7 @@ public class ObjectScanner : MonoBehaviour
                 if (saveToDisk) File.WriteAllBytes($"Assets/Scans/{scanObject.name}_iso_scan{hRotator.rotateIndex}{vRotator.rotateIndex}.png", isoTexture.EncodeToPNG());
 
                 // Capture Context Image
-                //Cull();
+                Cull();
                 //culled = CullUtility.Cull(contextCamera.transform.position, scanObject.transform.position);
                 Debug.Log($"Culled {culled.Count} objects");
                 contextCamera.Render();
@@ -110,7 +110,7 @@ public class ObjectScanner : MonoBehaviour
                 contextScans[scanObjectId].Add(contextTexture.EncodeToJPG());
                 
                 if (saveToDisk) File.WriteAllBytes($"Assets/Scans/{scanObject.name}_context_scan{hRotator.rotateIndex}{vRotator.rotateIndex}.png", contextTexture.EncodeToPNG());
-                //UnCull();
+                UnCull();
 
                 // Rotation about X Axis (Pitch)
                 vRotator.Rotate();

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SourceTOggler : MonoBehaviour
+public class SourceToggler : MonoBehaviour
 {
     public ThermObject thermObject;
     public void ToggleHeat()

@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 
 public class ThermResolver : MonoBehaviour
@@ -6,11 +5,12 @@ public class ThermResolver : MonoBehaviour
     public ThermGraph graph;
     public bool freeze;
     public float smallestTempDelta = 0f;
+    public float timeStep = 0.01f;
 
     static ThermResolver instance;
     public static ThermResolver Instance()
     {
-        instance = instance == null ? FindAnyObjectByType<ThermResolver>() : instance;
+        if (instance == null) instance = FindAnyObjectByType<ThermResolver>();
         return instance;
     }
 
@@ -19,24 +19,18 @@ public class ThermResolver : MonoBehaviour
         graph = new ThermGraph();
     }
 
-    public void ResetGraph()
+    private void Start()
     {
-        graph.Clear();
-        graph.thermObjects.AddRange(FindObjectsByType<ThermObject>());
-        Debug.Log(graph.thermObjects.Count + " ThermObjects found.");
+        ResetGraph();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         if (freeze) return;
-        /***
-         * Get all collisions.
-         * Decide which are Thermobjects.
-         * Get their temperatures and thermal conductivities.
-         */
+
         ResolveEdges();
-        UpdateObjects();
+        UpdateThermObjects();
     }
 
     /* 
@@ -53,8 +47,6 @@ public class ThermResolver : MonoBehaviour
     *
     * Fouriers Law:
     * q = -k * (T1 - T0)
-    * dT = q * t
-    * T(t) = T0 + (t * -k * (T1 - T0)) ^ 2 / 2
     * For now, I'm going to have k be the "total resistance" of
     * a circuit in series.
     *
@@ -62,52 +54,48 @@ public class ThermResolver : MonoBehaviour
     *
     *For now I wont use cross sectional area or length.TODO: implement
     *
-    * k = k1 + k2 + k3 + ...
+    * 1 / k = (1 / k1) + (1 / k2) + (1 / k3) + ...
     *
-
-    *sum each component for each contact.
-    * 
     */
+
     void ResolveEdgeFourier(ThermEdge edge)
     {
-        // From = T0, To = T1
         //Debug.Log($"Resolving edge from {edge.from.name} to {edge.to.name}");
         //Debug.Log($"{edge.from.name} temp: {edge.from.temperature}, conductivity: {edge.from.conductivity}");
         //Debug.Log($"{edge.to.name} temp: {edge.to.temperature}, conductivity: {edge.to.conductivity}");
 
-        float tempDelta = edge.to.temperature - edge.from.temperature;
+        float tempDelta = edge.from.temperature - edge.to.temperature;
         if(Mathf.Abs(tempDelta) < smallestTempDelta)
         {
             return;
         }
-        float k = edge.from.conductivity + edge.to.conductivity;
-        float t = 0.01f;
-        float flux = -k * tempDelta;
-        float qt = flux * t;
+        float k = 1f / (1f / edge.from.conductivity + 1f / edge.to.conductivity);
+        float flux = k * tempDelta;
+        float qt = flux * timeStep;
 
         //Debug.Log($"tempDelta: {tempDelta}, k: {k}, flux: {flux}, qt: {qt}");
 
-        edge.from.ApplyHeatFlow(-qt);
         edge.to.ApplyHeatFlow(qt);
+        edge.from.ApplyHeatFlow(-qt);
     }
 
-    // Not good for scale. kd tree?
-    public ThermObject ClosestThermObject(Vector3 position)
-    {
-        ThermObject result = null;
-        float distance = Mathf.Infinity;
-        foreach (ThermObject obj in graph.thermObjects)
-        {
-            float dist = (obj.transform.position - position).sqrMagnitude;
-            if (dist < distance)
-            {
-                distance = dist;
-                result = obj;
-            }
-        }
+    //// Not good for scale. kd tree?
+    //public ThermObject ClosestThermObject(Vector3 position)
+    //{
+    //    ThermObject result = null;
+    //    float distance = Mathf.Infinity;
+    //    foreach (ThermObject obj in graph.thermObjects)
+    //    {
+    //        float dist = (obj.transform.position - position).sqrMagnitude;
+    //        if (dist < distance)
+    //        {
+    //            distance = dist;
+    //            result = obj;
+    //        }
+    //    }
 
-        return result;
-    }
+    //    return result;
+    //}
 
     public void ResolveEdges()
     {
@@ -117,11 +105,17 @@ public class ThermResolver : MonoBehaviour
             ResolveEdgeFourier(edge);
         }
     }
-    public void UpdateObjects()
+    public void UpdateThermObjects()
     {
         foreach(ThermObject obj in graph.thermObjects)
         {
             obj.UpdateTemperature();
         }
+    }
+    public void ResetGraph()
+    {
+        graph.Clear();
+        graph.thermObjects.AddRange(FindObjectsByType<ThermObject>());
+        Debug.Log(graph.thermObjects.Count + " ThermObjects found.");
     }
 }

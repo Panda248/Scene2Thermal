@@ -10,7 +10,7 @@ public class ThermalResolverEditor : Editor
         if (GUILayout.Button("Update All"))
         {
             ((ThermResolver)target).ResolveEdges();
-            ((ThermResolver)target).UpdateObjects();
+            ((ThermResolver)target).UpdateThermObjects();
         }
         if (GUILayout.Button("Resolve Edges"))
         {
@@ -18,7 +18,7 @@ public class ThermalResolverEditor : Editor
         }
         if (GUILayout.Button("Update Temps"))
         {
-            ((ThermResolver)target).UpdateObjects();
+            ((ThermResolver)target).UpdateThermObjects();
         }
         if (GUILayout.Button("Reset Graph"))
         {

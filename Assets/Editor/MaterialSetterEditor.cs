@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class MaterialSetterEditor : Editor
         DrawDefaultInspector();
         if (GUILayout.Button("BatchSet"))
         {
-            ((MaterialSetter)target).BatchSet();
+            _ = ((MaterialSetter)target).BatchSet();
         }
         if (GUILayout.Button("Set"))
         {

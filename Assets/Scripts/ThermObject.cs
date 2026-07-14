@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using JsonClasses;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 //[RequireComponent(typeof(Rigidbody))]
 public class ThermObject : MonoBehaviour
@@ -13,7 +9,7 @@ public class ThermObject : MonoBehaviour
     public float conductivity, mass, specificHeat, generationRate, temperature, temperatureDelta, volume;
     public bool actAsHeatSource;
     //Collider coll;
-    public Rigidbody rb;
+    Rigidbody rb;
 
     void Awake()
     {
@@ -40,22 +36,6 @@ public class ThermObject : MonoBehaviour
         }
     }
 
-    //public void SetProperties(JsonClasses.MaterialInference materialInference)
-    //{
-    //    conductivity = materialInference.thermal_conductivity;
-    //    mass = materialInference.mass;
-    //    specificHeat = materialInference.specific_heat;
-    //    temperature = materialInference.temperature;
-    //}
-
-    //public void SetProperties(JsonClasses.ObjectMaterialInference objectMaterialInference)
-    //{
-    //    conductivity = objectMaterialInference.thermal_conductivity;
-    //    mass = objectMaterialInference.mass;
-    //    specificHeat = objectMaterialInference.heat_capacity;
-    //    temperature = objectMaterialInference.initial_temperature;
-    //}
-
     public void SetProperties(JsonClasses.ThermObjectProperties properties)
     {
         //Debug.Log($"{name}: SetProperties");
@@ -75,39 +55,15 @@ public class ThermObject : MonoBehaviour
         temperatureDelta += deltaTemp;
     }
 
-    public virtual void ApplyCooling()
-    {
-        // Newton's law of cooling: dT/dt = -h * (T - T_environment)
-        // where h is the heat transfer coefficient (conductivity)
-        float environmentTemperature = ThermEnvironment.Instance().temperature;
-        float temperatureDifference = temperature - environmentTemperature;
-        float coolingRate = -conductivity * temperatureDifference;
-        float deltaTemp = coolingRate * 0.02f / (mass * specificHeat);
-        temperatureDelta += deltaTemp;
-    }
     public virtual void UpdateTemperature()
     {
         if (actAsHeatSource) {
             //Debug.Log($"{name}: acting as heat source");
             ApplyHeatFlow(generationRate);
         }
-        ApplyCooling();
         temperature += temperatureDelta;
         temperatureDelta = 0;
     }
-
-    //void OnCollisionStay(Collision collisionInfo)
-    //{
-    //    // Debug-draw all contact points and normals
-    //    //Debug.Log(collisionInfo.contactCount);
-    //    //for (int i = 0; i < collisionInfo.contactCount; i++)
-    //    //{
-    //    //    ContactPoint contact = collisionInfo.GetContact(i);
-    //    //    Debug.DrawRay(contact.point, contact.normal, Color.white);
-    //    //}
-    //}
-
-    
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -135,6 +91,25 @@ public class ThermObject : MonoBehaviour
             {
                 Debug.Log("Removed edge between " + this.name + " and " + other.name);
             }
+        }
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        ThermObject thermObject = other.gameObject.GetComponentInParent<ThermObject>();
+        if (thermObject != null)
+        {
+            ThermResolver.Instance().graph.AddEdge(this, thermObject);
+            Debug.Log("Hand edge added");
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        ThermObject thermObject = other.gameObject.GetComponentInParent<ThermObject>();
+        if (thermObject != null)
+        {
+            ThermResolver.Instance().graph.RemoveEdge(this, thermObject);
+            Debug.Log("hand edge removed");
         }
     }
 
