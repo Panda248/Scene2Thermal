@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,14 +10,7 @@ public class InputManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        thermalVisualizers = new List<ThermalVisualizer>();
-        foreach (Transform child in ThermEnvironment.Instance().transform)
-        {
-            if(child.TryGetComponent<ThermalVisualizer>(out ThermalVisualizer viz))
-            {
-                thermalVisualizers.Add(viz);
-            }
-        }
+        thermalVisualizers = FindObjectsByType<ThermalVisualizer>().ToList();
         //Debug.Log($"{thermalVisualizers.Count} thermal Visualizers");
 
         toggleThermsRef.action.performed += ctx => OnToggleThermals();
