@@ -1,12 +1,12 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(InputManager))]
-public class InputManagerEditor : Editor
+[CustomEditor(typeof(VisualizerToggle))]
+public class VisualizerToggleEditor: Editor
 {
     private void OnSceneGUI()
     {
-        InputManager inputManager = (InputManager)target;
+        VisualizerToggle inputManager = (VisualizerToggle)target;
         if (GUILayout.Button("Run Startup"))
         {
             inputManager.OnToggleThermals();

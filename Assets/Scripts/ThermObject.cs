@@ -3,11 +3,11 @@ using UnityEngine;
 //[RequireComponent(typeof(Rigidbody))]
 public class ThermObject : MonoBehaviour
 {
-    const float SPEED_OF_LIGHT = 299800000;
-    const float STEFAN_BOLTZMANN_CONSTANT = 5.670f / 100000000f;
+    //const float SPEED_OF_LIGHT = 299800000;
+    //const float STEFAN_BOLTZMANN_CONSTANT = 5.670f / 100000000f;
 
     public float conductivity, mass, specificHeat, generationRate, temperature, temperatureDelta, volume;
-    public bool actAsHeatSource;
+    public bool actAsHeatSource, isHand;
     //Collider coll;
     Rigidbody rb;
 
