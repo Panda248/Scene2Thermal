@@ -2,17 +2,17 @@ using UnityEngine;
 
 [RequireComponent(typeof(Client))]
 [RequireComponent(typeof(BatchScan))]
-[RequireComponent(typeof(MaterialSetter))]
+[RequireComponent(typeof(PropertySetter))]
 public class InferenceManager : MonoBehaviour
 {
     public bool runStartup;
     public Transform environmentParent;
-    public MaterialSetter materialSetter;
+    public PropertySetter materialSetter;
     public BatchScan batchScan;
 
     private void Awake()
     {
-        materialSetter = GetComponent<MaterialSetter>();
+        materialSetter = GetComponent<PropertySetter>();
         batchScan = GetComponent<BatchScan>();
         materialSetter.environmentParent = environmentParent;
         batchScan.environmentParent = environmentParent;
