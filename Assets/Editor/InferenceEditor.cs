@@ -4,7 +4,7 @@ using UnityEngine;
 [CustomEditor(typeof(InferenceManager))]
 public class InferenceEditor : Editor
 {
-    private void OnSceneGUI()
+    public override void OnInspectorGUI()
     {
         InferenceManager inferenceManager = (InferenceManager)target;
         if (GUILayout.Button("Run Startup"))

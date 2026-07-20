@@ -6,9 +6,8 @@ public class CullUtility
 {
     // Culls based on 5 rays arranged in a plus sign
     // Returns a list of game objects that are hit by the rays
-    public static List<GameObject> Cull(Vector3 origin, Vector3 dest)
+    public static List<GameObject> Cull(Vector3 origin, Vector3 dest, GameObject blacklist)
     {
-        //List<GameObject> culledObjects = new List<GameObject>();
         HashSet<GameObject> culledObjects = new HashSet<GameObject>();
         Vector3 direction = dest - origin;
         float distance = direction.magnitude;
@@ -24,13 +23,34 @@ public class CullUtility
             RaycastHit[] hits = Physics.RaycastAll(ray, distance);
             foreach (RaycastHit hit in hits)
             {
-                if(culledObjects.Contains(hit.collider.gameObject)) continue;
+                if(culledObjects.Contains(hit.collider.gameObject) || hit.collider.gameObject == blacklist) continue;
                 culledObjects.Add(hit.collider.gameObject);
+                //hit.transform.GetComponent<Renderer>().enabled = false;
                 hit.collider.gameObject.SetActive(false);
             }
         }
 
         return culledObjects.ToList();
+    }
+
+    public static List<GameObject> Cull(Vector3 origin, GameObject target)
+    {
+        Vector3 center = target.transform.position;
+        if (target.TryGetComponent<Renderer>(out Renderer renderer))
+        {
+            Debug.Log("Adding center offset");
+            center = renderer.bounds.center;
+        }
+        return Cull(origin, center, target);
+    }
+
+    public static void UnCull(List<GameObject> culledObjects)
+    {
+        foreach (GameObject obj in culledObjects)
+        {
+            //obj.GetComponent<Renderer>().enabled = true;
+            obj.SetActive(true);
+        }
     }
 
     public static float GetTargetDistance(float fov, Bounds bounds, float ratio)

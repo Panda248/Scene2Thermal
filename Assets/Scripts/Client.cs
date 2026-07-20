@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// Handles HTTP requests to server for Semantic Inference
 /// </summary>
@@ -52,7 +53,7 @@ public class Client : MonoBehaviour
         // Store Scene data in json
         string nameJson = JsonConvert.SerializeObject(new
         {
-            name = scanner.environmentParent.name,
+            name = transform.root.name
         });
         using StringContent name = new(nameJson, System.Text.Encoding.UTF8, "application/json");
         //Debug.Log(nameJson);

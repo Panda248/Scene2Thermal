@@ -10,10 +10,10 @@ public class SceneScanner : MonoBehaviour
 {
     public RenderTexture scanOutput;
     public Texture2D outputTexture;
-    public Transform environmentParent;
     public List<byte[]> scans;
     Rotator rotator;
     Camera scan;
+    Light scanLight;
     List<GameObject> culled;
     static SceneScanner instance;
     public static SceneScanner Instance()
@@ -30,52 +30,69 @@ public class SceneScanner : MonoBehaviour
         rotator = GetComponent<Rotator>();
         culled = new List<GameObject>();
         scan = GetComponentInChildren<Camera>();
+        scanLight = GetComponentInChildren<Light>();
         outputTexture = new Texture2D(scanOutput.width, scanOutput.height);
         scans = new List<byte[]>();
     }
 
-    public void Scan(bool saveToDisk)
+    public void Scan(Vector3 center, bool saveToDisk)
     {
-        transform.position = GetSceneCenter();
+        transform.position = center;
         for (int i = 0; i < 4; i++)
         {
             Debug.Log($"scene scan {i} with rotation {transform.rotation.eulerAngles.y} and index {rotator.rotateIndex}");
-            Cull();
+            Cull(center);
             //culled = CullUtility.Cull(scan.transform.position, GetSceneCenter());
             //Debug.Log($"Center is {GetSceneCenter()}");
             //Debug.Log($"{culled.Count} objects culled");
-
+            scanLight.enabled = true;
             RenderTexture.active = scanOutput;
             scan.Render();
             outputTexture.ReadPixels(new Rect(0, 0, scanOutput.width, scanOutput.height), 0, 0);
             outputTexture.Apply();
-            
+            scanLight.enabled = false;
+
             scans.Add(outputTexture.EncodeToJPG());
-            
-            if(saveToDisk) File.WriteAllBytes($"Assets/Scans/scene_scan{rotator.rotateIndex}.png",outputTexture.EncodeToPNG());
-            
+
+            if (saveToDisk) File.WriteAllBytes($"Assets/Scans/scene_scan{rotator.rotateIndex}.png", outputTexture.EncodeToPNG());
+
             UnCull();
-            
+
             rotator.Rotate();
         }
         transform.position = Vector3.zero;
     }
 
-    Vector3 GetSceneCenter()
-    {
-        int childCount = environmentParent.childCount;
-        Vector3 center = Vector3.zero;
-        for (int i = 0; i < childCount; i++)
-        {
-            center += environmentParent.GetChild(i).position;
-        }
-        return center / childCount;
-    }
+    //public void Scan(bool saveToDisk)
+    //{
+    //    transform.position = GetSceneCenter();
+    //    for (int i = 0; i < 4; i++)
+    //    {
+    //        Debug.Log($"scene scan {i} with rotation {transform.rotation.eulerAngles.y} and index {rotator.rotateIndex}");
+    //        Cull();
+    //        //culled = CullUtility.Cull(scan.transform.position, GetSceneCenter());
+    //        //Debug.Log($"Center is {GetSceneCenter()}");
+    //        //Debug.Log($"{culled.Count} objects culled");
 
-    void Cull()
+    //        RenderTexture.active = scanOutput;
+    //        scan.Render();
+    //        outputTexture.ReadPixels(new Rect(0, 0, scanOutput.width, scanOutput.height), 0, 0);
+    //        outputTexture.Apply();
+            
+    //        scans.Add(outputTexture.EncodeToJPG());
+            
+    //        if(saveToDisk) File.WriteAllBytes($"Assets/Scans/scene_scan{rotator.rotateIndex}.png",outputTexture.EncodeToPNG());
+            
+    //        UnCull();
+            
+    //        rotator.Rotate();
+    //    }
+    //    transform.position = Vector3.zero;
+    //}
+
+    void Cull(Vector3 center)
     {
         List<RaycastHit> hits;
-        Vector3 center = GetSceneCenter();
         Vector3 origin = scan.transform.position;
         Vector3 centerAdjusted = Vector3.Lerp(center, origin, 0.1f);
         Ray ray = new Ray(origin, centerAdjusted - origin);

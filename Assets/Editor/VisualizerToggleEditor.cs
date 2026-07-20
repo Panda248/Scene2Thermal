@@ -4,12 +4,12 @@ using UnityEngine;
 [CustomEditor(typeof(VisualizerToggle))]
 public class VisualizerToggleEditor: Editor
 {
-    private void OnSceneGUI()
+    public override void OnInspectorGUI()
     {
-        VisualizerToggle inputManager = (VisualizerToggle)target;
-        if (GUILayout.Button("Run Startup"))
+        DrawDefaultInspector();
+        if (GUILayout.Button("Toggle"))
         {
-            inputManager.OnToggleThermals();
+            ((VisualizerToggle)target).OnToggleThermals();
         }
     }
 }

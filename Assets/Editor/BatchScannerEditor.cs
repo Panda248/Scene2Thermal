@@ -9,7 +9,7 @@ public class BatchScannerEditor : Editor
         DrawDefaultInspector();
         if (GUILayout.Button("Scan"))
         {
-            ((BatchScan)target).ScanAll(((BatchScan)target).saveToDisk);
+            ((BatchScan)target).ScanAll(((BatchScan)target).thermObjects, ((BatchScan)target).saveToDisk);
         }
     }
 }

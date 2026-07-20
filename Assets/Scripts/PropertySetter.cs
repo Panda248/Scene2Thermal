@@ -22,7 +22,6 @@ public class PropertySetter : MonoBehaviour
 
         foreach (ThermObject thermObj in thermObjects)
         {
-
             objectInferenceTasks.Add(new(Client.Instance().RequestObjectInference(thermObj.gameObject),
                 thermObj));
         }

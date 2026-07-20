@@ -11,6 +11,18 @@ public class ThermGraph
         edges = new List<ThermEdge>();
     }
 
+    public bool HasEdge(ThermObject thermObject)
+    {
+        foreach (ThermEdge edge in edges)
+        {
+            if (edge.from == thermObject || edge.to == thermObject)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ThermEdge GetEdge(ThermObject from, ThermObject to)
     {
         foreach (ThermEdge edge in edges)
