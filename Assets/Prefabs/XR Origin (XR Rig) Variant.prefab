@@ -724,14 +724,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888ae74879cd8c44fb8a7acfb463408a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThermObject
-  conductivity: 0
+  conductivity: 0.3
   mass: 1
-  specificHeat: 1
+  specificHeat: 4.184
   generationRate: 0
-  temperature: 0
+  temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  isHand: 1
 --- !u!1 &4273812787515015601
 GameObject:
   m_ObjectHideFlags: 0
@@ -1577,14 +1578,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888ae74879cd8c44fb8a7acfb463408a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThermObject
-  conductivity: 0
+  conductivity: 0.3
   mass: 1
-  specificHeat: 1
+  specificHeat: 4.184
   generationRate: 0
-  temperature: 0
+  temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  isHand: 1
 --- !u!1 &7859375536296093342
 GameObject:
   m_ObjectHideFlags: 0
