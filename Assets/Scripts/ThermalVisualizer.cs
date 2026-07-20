@@ -31,7 +31,10 @@ public class ThermalVisualizer : MonoBehaviour
 
     private void Awake()
     {
-        thermMaterial = Resources.Load<Material>("Temperature");
+        if(thermMaterial == null)
+        {
+            thermMaterial = Resources.Load<Material>("Temperature");
+        }
         //mRenderer = GetComponent<MeshRenderer>();
         //prevMaterial = new List<Material>();
         //mRenderer.GetMaterials(prevMaterial);
