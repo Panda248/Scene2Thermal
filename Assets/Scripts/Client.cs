@@ -52,7 +52,7 @@ public class Client : MonoBehaviour
         // Store Scene data in json
         string nameJson = JsonConvert.SerializeObject(new
         {
-            name = scanner.environmentParent.name,
+            name = SceneManager.GetActiveScene().name
         });
         using StringContent name = new(nameJson, System.Text.Encoding.UTF8, "application/json");
         //Debug.Log(nameJson);
