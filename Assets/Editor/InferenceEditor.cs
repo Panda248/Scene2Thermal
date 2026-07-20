@@ -6,6 +6,7 @@ public class InferenceEditor : Editor
 {
     public override void OnInspectorGUI()
     {
+        DrawDefaultInspector();
         InferenceManager inferenceManager = (InferenceManager)target;
         if (GUILayout.Button("Run Startup"))
         {
