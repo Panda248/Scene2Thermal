@@ -4,38 +4,26 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class MaterialSetter : MonoBehaviour
+public class PropertySetter : MonoBehaviour
 {
+    // For testing
     public string sampleJson = "    ";
-    public Transform environmentParent;
-    string sceneCategory;
     public ThermObject targetObject;
-    //public bool batchAtStart;
+    public List<ThermObject> targetObjects;
 
-    //void Start()
-    //{
-    //    AddThermObjects();
-    //    if (batchAtStart)
-    //    {
-    //        BatchSet();
-    //    }
-    //}
+    string sceneCategory;
 
-    public async Task BatchSet()
+    public async Task BatchSet(List<ThermObject> thermObjects)
     {
         sceneCategory = await Client.Instance().RequestSceneInference();
         Client.Instance().SceneCategory = sceneCategory;
         List<Tuple<Task<string>, ThermObject>> objectInferenceTasks = new();
 
 
-        foreach (Transform child in environmentParent)
+        foreach (ThermObject thermObj in thermObjects)
         {
-            if (child.gameObject.GetComponent<ThermObject>() == null)
-            {
-                child.gameObject.AddComponent<ThermObject>();
-            }
-            objectInferenceTasks.Add(new(Client.Instance().RequestObjectInference(child.gameObject),
-                child.gameObject.GetComponent<ThermObject>()));
+            objectInferenceTasks.Add(new(Client.Instance().RequestObjectInference(thermObj.gameObject),
+                thermObj));
         }
 
         foreach (Tuple<Task<string>, ThermObject> task in objectInferenceTasks)
@@ -59,17 +47,5 @@ public class MaterialSetter : MonoBehaviour
         Debug.Log($"{target.gameObject.name} received JSON: {thermJson}");
         JsonClasses.ThermObjectProperties materialInference = JsonConvert.DeserializeObject<JsonClasses.ThermObjectProperties>(thermJson);
         target.SetProperties(materialInference);
-    }
-
-
-    public void AddThermObjects()
-    {
-        foreach(Transform child in environmentParent)
-        {
-            if (child.gameObject.GetComponent<ThermObject>() == null)
-            {
-                child.gameObject.AddComponent<ThermObject>();
-            }
-        }
     }
 }

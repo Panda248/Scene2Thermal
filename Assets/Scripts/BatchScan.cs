@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -7,43 +8,42 @@ using UnityEngine;
 /// </summary>
 public class BatchScan : MonoBehaviour
 {
-    public Transform environmentParent;
-    public bool saveToDisk, runAtStart;
-    bool started;
-    public void ScanAll(bool saveToDisk=false)
+    public List<ThermObject> thermObjects;
+    public bool saveToDisk;
+    public void ScanAll(List<ThermObject> thermObjects, bool saveToDisk=false)
     {
-        ScanScene(saveToDisk);
-        ScanObjects(saveToDisk);
+        Vector3 center = GetCenter(thermObjects);
+        ScanScene(center, saveToDisk);
+        ScanObjects(thermObjects, saveToDisk);
     }
 
-    public void ScanScene(bool saveToDisk=false)
+    public void ScanScene(Vector3 center, bool saveToDisk=false)
     {
-        //Debug.Log($"Scanning {environmentParent.childCount} objects");
-        SceneScanner.Instance().environmentParent = environmentParent;
-        SceneScanner.Instance().Scan(saveToDisk);
+        SceneScanner.Instance().Scan(center, saveToDisk);
     }
 
-    public void ScanObjects(bool saveToDisk=false)
+    public void ScanObjects(List<ThermObject> thermObjects, bool saveToDisk=false)
     {
-        for (int i = 0; i < environmentParent.childCount; i++)
+        foreach (ThermObject thermObj in thermObjects)
         {
-            ObjectScanner.Instance().ScanObject = environmentParent.GetChild(i).gameObject;
-            ObjectScanner.Instance().Scan(saveToDisk);
+            ObjectScanner.Instance().Scan(saveToDisk, thermObj.gameObject);
         }
         ObjectScanner.Instance().ScanObject = null;
     }
 
-    private void Awake()
+    public Vector3 GetCenter(List<ThermObject> thermObjects)
     {
-        started = runAtStart;
-    }
-
-    private void Update()
-    {
-        if(started) 
+        if (thermObjects == null || thermObjects.Count == 0)
         {
-            ScanAll(saveToDisk);
-            started = false;
+            return Vector3.zero;
         }
+
+        Vector3 center = Vector3.zero;
+        foreach (ThermObject thermObj in thermObjects)
+        {
+            center += thermObj.transform.position;
+        }
+        center /= thermObjects.Count;
+        return center;
     }
 }

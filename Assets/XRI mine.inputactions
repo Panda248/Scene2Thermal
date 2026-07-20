@@ -2411,6 +2411,17 @@
                 },
                 {
                     "name": "",
+                    "id": "110ed494-9d29-40d2-979d-e760bd1f22cc",
+                    "path": "<Keyboard>/minus",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Primary Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "97b41c15-cb17-4beb-8a08-34e366ac6d7b",
                     "path": "<XRController>{RightHand}/secondaryButton",
                     "interactions": "",

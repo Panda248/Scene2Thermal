@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// Handles HTTP requests to server for Semantic Inference
 /// </summary>
