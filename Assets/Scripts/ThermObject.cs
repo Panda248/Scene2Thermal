@@ -59,7 +59,7 @@ public class ThermObject : MonoBehaviour
     {
         if (actAsHeatSource) {
             //Debug.Log($"{name}: acting as heat source");
-            ApplyHeatFlow(generationRate * 0.01f);
+            ApplyHeatFlow(generationRate);
         }
         temperature += temperatureDelta;
         temperatureDelta = 0;
