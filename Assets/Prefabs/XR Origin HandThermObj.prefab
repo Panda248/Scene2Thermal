@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5929940008787373598
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7261660911445509069, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.776
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261660911445509069, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.00000003828262
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261660911445509069, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.916
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261660911445509069, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261660911445509069, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261660911445509069, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261660911445509069, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261660911445509069, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261660911445509069, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261660911445509069, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261660911445509070, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+      propertyPath: m_Name
+      value: XR Origin (XR Rig) Variant Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3070308570866222626, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+    - {fileID: 2154608403239236849, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2890979786373173121, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6476620059776641938}
+    - targetCorrespondingSourceObject: {fileID: 7601587459031151875, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1059124531548740389}
+  m_SourcePrefab: {fileID: 100100000, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+--- !u!1 &4266354163538483997 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7601587459031151875, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+  m_PrefabInstance: {fileID: 5929940008787373598}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1059124531548740389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4266354163538483997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74eece1d8652d764fa634175c046bdd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
+  conductivity: 0.3
+  mass: 1
+  specificHeat: 4.184
+  generationRate: 0
+  temperature: 37
+  temperatureDelta: 0
+  volume: 0
+  actAsHeatSource: 0
+  isHand: 1
+  returnToBodyTemp: 1
+--- !u!1 &8815149523140501919 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2890979786373173121, guid: b2d97e5927b0e5244b1a8d8bae83936c, type: 3}
+  m_PrefabInstance: {fileID: 5929940008787373598}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6476620059776641938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8815149523140501919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74eece1d8652d764fa634175c046bdd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
+  conductivity: 0.3
+  mass: 1
+  specificHeat: 4.184
+  generationRate: 0
+  temperature: 37
+  temperatureDelta: 0
+  volume: 0
+  actAsHeatSource: 0
+  isHand: 1
+  returnToBodyTemp: 1
