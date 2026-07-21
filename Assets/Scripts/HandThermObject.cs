@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class HandThermObject : ThermObject
 {
+    public bool returnToBodyTemp;
     public float CalulateWeightedTemperatureDelta()
     {
 
         ThermResolver resolver = ThermResolver.Instance();
-        float weightedDelta = 0f;
+        float weightedDelta = returnToBodyTemp ? 37f - temperature : 0f;
 
         if (resolver.graph.thermObjects.Count <= 1)
         {
