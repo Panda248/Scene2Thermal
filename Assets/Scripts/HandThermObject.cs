@@ -3,6 +3,7 @@ using UnityEngine;
 public class HandThermObject : ThermObject
 {
     public bool returnToBodyTemp;
+    public static float minDistance = 5f;
     public float CalulateWeightedTemperatureDelta()
     {
 
@@ -13,19 +14,19 @@ public class HandThermObject : ThermObject
         {
             return weightedDelta;
         }
-
+        int consideredObjects = 1;
         foreach (ThermObject thermObject in resolver.graph.thermObjects)
         {
-            if (thermObject != this)
+            float distance = (transform.position - thermObject.transform.position).sqrMagnitude;
+            if (thermObject != this && distance < minDistance * minDistance)
             {
-                float distance = Vector3.Distance(transform.position, thermObject.transform.position);
-
                 weightedDelta += (thermObject.temperature - temperature) / (distance + 1f);
+                consideredObjects++;
             }
         }
         Debug.Log(weightedDelta);
-        Debug.Log(weightedDelta / (resolver.graph.thermObjects.Count - 1));
-        return weightedDelta / (resolver.graph.thermObjects.Count - 1);
+        Debug.Log(weightedDelta / (consideredObjects));
+        return weightedDelta / (consideredObjects);
     }
 
     public override void UpdateTemperature()
