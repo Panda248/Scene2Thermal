@@ -360,7 +360,7 @@ PrefabInstance:
     - target: {fileID: 1255647619390271626, guid: 3df3e1220f2164f448701a6de8084f92, type: 3}
       propertyPath: m_CastOrigin
       value: 
-      objectReference: {fileID: 247329688}
+      objectReference: {fileID: 2343263572485202626}
     - target: {fileID: 1722882099693224055, guid: 3df3e1220f2164f448701a6de8084f92, type: 3}
       propertyPath: m_SmoothOffset
       value: 1
@@ -368,7 +368,7 @@ PrefabInstance:
     - target: {fileID: 1722882099693224055, guid: 3df3e1220f2164f448701a6de8084f92, type: 3}
       propertyPath: m_TransformToFollow
       value: 
-      objectReference: {fileID: 247329688}
+      objectReference: {fileID: 2343263572485202626}
     - target: {fileID: 1722882099693224055, guid: 3df3e1220f2164f448701a6de8084f92, type: 3}
       propertyPath: m_UseManipulationInput
       value: 0
@@ -464,7 +464,7 @@ PrefabInstance:
     - target: {fileID: 7104419533170684624, guid: 3df3e1220f2164f448701a6de8084f92, type: 3}
       propertyPath: m_CastOrigin
       value: 
-      objectReference: {fileID: 247329688}
+      objectReference: {fileID: 2343263572485202626}
     m_RemovedComponents:
     - {fileID: 3179295312718945089, guid: 3df3e1220f2164f448701a6de8084f92, type: 3}
     m_RemovedGameObjects: []
@@ -3050,7 +3050,7 @@ PrefabInstance:
     - target: {fileID: 130500635472496801, guid: b200f6587d118224eba8467281481800, type: 3}
       propertyPath: m_CastOrigin
       value: 
-      objectReference: {fileID: 1237605869}
+      objectReference: {fileID: 2767310745307651359}
     - target: {fileID: 2447424620550846319, guid: b200f6587d118224eba8467281481800, type: 3}
       propertyPath: m_Name
       value: Near-Far Interactor
@@ -3134,7 +3134,7 @@ PrefabInstance:
     - target: {fileID: 8229381180640938747, guid: b200f6587d118224eba8467281481800, type: 3}
       propertyPath: m_CastOrigin
       value: 
-      objectReference: {fileID: 1237605869}
+      objectReference: {fileID: 2767310745307651359}
     - target: {fileID: 8408429868716997126, guid: b200f6587d118224eba8467281481800, type: 3}
       propertyPath: m_SmoothOffset
       value: 1
@@ -3142,7 +3142,7 @@ PrefabInstance:
     - target: {fileID: 8408429868716997126, guid: b200f6587d118224eba8467281481800, type: 3}
       propertyPath: m_TransformToFollow
       value: 
-      objectReference: {fileID: 1237605869}
+      objectReference: {fileID: 2767310745307651359}
     - target: {fileID: 8408429868716997126, guid: b200f6587d118224eba8467281481800, type: 3}
       propertyPath: m_UseManipulationInput
       value: 0
@@ -18068,12 +18068,12 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8309518334522007546}
+  - {fileID: 247329688}
   - {fileID: 9060306227974642224}
   - {fileID: 1375159669631125361}
   - {fileID: 2343263572485202626}
   - {fileID: 3000440570289928181}
   - {fileID: 6382511289427178431}
-  - {fileID: 247329688}
   m_Father: {fileID: 747125294461516351}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &5972326473584063374
@@ -18382,13 +18382,13 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1664723695834136522}
+  - {fileID: 1237605869}
   - {fileID: 7802065908765956428}
   - {fileID: 2767310745307651359}
   - {fileID: 4660561877194636928}
   - {fileID: 2400017392929771263}
   - {fileID: 1824560399662520634}
   - {fileID: 1932541618}
-  - {fileID: 1237605869}
   m_Father: {fileID: 747125294461516351}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6122779086662003718
