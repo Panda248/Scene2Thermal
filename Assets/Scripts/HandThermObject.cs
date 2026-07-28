@@ -18,7 +18,7 @@ public class HandThermObject : ThermObject
         foreach (ThermObject thermObject in resolver.graph.thermObjects)
         {
             float distance = (transform.position - thermObject.transform.position).sqrMagnitude;
-            if (thermObject != this && distance < minDistance * minDistance)
+            if (!(thermObject is HandThermObject) && distance < minDistance * minDistance)
             {
                 weightedDelta += (thermObject.temperature - temperature) / (distance + 1f);
                 consideredObjects++;
