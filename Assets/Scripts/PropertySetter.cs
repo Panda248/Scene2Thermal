@@ -11,12 +11,12 @@ public class PropertySetter : MonoBehaviour
     public ThermObject targetObject;
     public List<ThermObject> targetObjects;
 
-    string sceneCategory;
-
     public async Task BatchSet(List<ThermObject> thermObjects)
     {
-        sceneCategory = await Client.Instance().RequestSceneInference();
-        Client.Instance().SceneCategory = sceneCategory;
+        string sceneJson = await Client.Instance().RequestSceneInference();
+        JsonClasses.SceneInference sceneInference = JsonConvert.DeserializeObject<JsonClasses.SceneInference>(sceneJson);
+        Client.Instance().SceneCategory = sceneInference.scene_category;
+        ThermResolver.Instance().ambientTemperature = sceneInference.ambient_temperature;
         List<Tuple<Task<string>, ThermObject>> objectInferenceTasks = new();
 
 

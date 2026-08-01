@@ -1,8 +1,9 @@
 namespace JsonClasses 
 {
-    public class SceneCategory
+    public class SceneInference
     {
-        public string category;
+        public string scene_category;
+        public float ambient_temperature;
     }
 
     public class ObjectInference

@@ -6,6 +6,7 @@ public class ThermResolver : MonoBehaviour
     public bool freeze;
     public float smallestTempDelta = 0f;
     public float timeStep = 0.01f;
+    public float ambientTemperature = 20f;
 
     static ThermResolver instance;
     public static ThermResolver Instance()

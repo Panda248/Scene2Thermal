@@ -12145,6 +12145,7 @@ GameObject:
   - component: {fileID: 1553564023677748937}
   - component: {fileID: 3472920372763765653}
   - component: {fileID: 6793502310371533389}
+  - component: {fileID: 6793502310371533390}
   m_Layer: 0
   m_Name: RightHandQuestVisual
   m_TagString: Untagged
@@ -19991,6 +19992,24 @@ MonoBehaviour:
   m_PokeStrengthSnapThreshold: 0.01
   m_SmoothingAmount: 24
   m_FixedOffset: 0.005
+--- !u!114 &6793502310371533390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3027900777649067077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c11943aa4c7e47a47a7b9e98f5c9e79a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HandSerial
+  palm: {fileID: 1258995316}
+  thumb: {fileID: 724017135}
+  index: {fileID: 1418670398}
+  middle: {fileID: 973792718}
+  ring: {fileID: 189757565}
+  pinky: {fileID: 320208664}
 --- !u!4 &6877843268161413043
 Transform:
   m_ObjectHideFlags: 0
