@@ -18,6 +18,7 @@ public class HandThermObject : ThermObject
         foreach (ThermObject thermObject in resolver.graph.thermObjects)
         {
             float distance = (transform.position - thermObject.transform.position).sqrMagnitude;
+            distance *= distance;
             if (!(thermObject is HandThermObject) && distance < minDistance * minDistance)
             {
                 weightedDelta += (thermObject.temperature - temperature) / (distance + 1f);
@@ -39,6 +40,12 @@ public class HandThermObject : ThermObject
         base.UpdateTemperature();
     }
 
+    public void FixedUpdate()
+    {
+
+    }
+}
+
     //public float GetSensedTemperature()
     //{
     //    if(ThermResolver.Instance().graph.HasEdge(this))
@@ -50,4 +57,4 @@ public class HandThermObject : ThermObject
     //        return CalulateWeightedTemperatureAverage();
     //    }
     //}
-}
+
