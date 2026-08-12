@@ -67,7 +67,6 @@ public class ThermObject : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //ThermObject other = collision.gameObject.GetComponent<ThermObject>();
         ThermObject other = collision.gameObject.GetComponentInParent<ThermObject>();
         if (other != null && ThermResolver.Instance().graph.GetEdge(this, other) == null)
         {
@@ -76,13 +75,11 @@ public class ThermObject : MonoBehaviour
             {
                 Debug.Log("Added edge between " + this.name + " and " + other.name);
             }
-            //Physics.OverlapBox(transform.position, coll.bounds.extents, transform.rotation);
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        //ThermObject other = collision.gameObject.GetComponent<ThermObject>();
         ThermObject other = collision.gameObject.GetComponentInParent<ThermObject>();
         if (other != null)
         {

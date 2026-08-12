@@ -85,9 +85,9 @@ public class ObjectScanner : MonoBehaviour
         {
             isoScans.Add(scanObjectId, new List<byte[]>());
         }
-        Vector3 contextOffset = CullUtility.GetTargetDistance(contextCamera.fieldOfView, target.GetComponent<Renderer>().bounds, 0.3f) * Vector3.back;
+        Vector3 contextOffset = CullUtility.GetTargetDistance(contextCamera.fieldOfView, target.GetComponentInChildren<Renderer>().bounds, 0.3f) * Vector3.back;
         contextCamera.transform.localPosition = contextOffset;
-        Vector3 isoOffset = CullUtility.GetTargetDistance(contextCamera.fieldOfView, target.GetComponent<Renderer>().bounds, 0.6f) * Vector3.back;
+        Vector3 isoOffset = CullUtility.GetTargetDistance(contextCamera.fieldOfView, target.GetComponentInChildren<Renderer>().bounds, 0.6f) * Vector3.back;
         isoCamera.transform.localPosition = isoOffset;
 
         transform.position = target.transform.position + target.GetComponent<Rigidbody>().centerOfMass;

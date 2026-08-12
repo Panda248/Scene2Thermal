@@ -100,7 +100,7 @@ public class Client : MonoBehaviour
         {
             name = obj.name, 
             scale = obj.transform.localScale.ToString(),
-            size = obj.GetComponent<MeshFilter>()?.mesh.bounds.size.ToString(),
+            size = obj.GetComponentInChildren<MeshFilter>()?.mesh.bounds.size.ToString(),
             scene_category = SceneCategory
         });
         using StringContent objContent = new (objContentJson, System.Text.Encoding.UTF8, "application/json");

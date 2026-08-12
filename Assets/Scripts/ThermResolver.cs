@@ -36,18 +36,14 @@ public class ThermResolver : MonoBehaviour
 
     /* 
     * use the following equation
-    * T(t) = T0 + (T1 - T0) * (e^(-k* t))
-    * 
-    * maybe derive?
-    * T'(t) = -k * (T1 - T0) * e^(-k*t)\
-    * 
-    * t = time since contact
-    * T1 = temperature of other object
-    * T0 = temperature of this object at time of contact
-    * k = thermal conductivity of other object
     *
     * Fouriers Law:
     * q = -k * (T1 - T0)
+    * 
+    * T1 = temperature of other object
+    * T0 = temperature of this object at time of contact
+    * k = thermal conductivity of other object
+    * 
     * For now, I'm going to have k be the "total resistance" of
     * a circuit in series.
     *
@@ -118,5 +114,16 @@ public class ThermResolver : MonoBehaviour
         graph.Clear();
         graph.thermObjects.AddRange(FindObjectsByType<ThermObject>());
         Debug.Log(graph.thermObjects.Count + " ThermObjects found.");
+    }
+
+    public void DetectCollisions()
+    {
+        Collider[] colliderBuffer = new Collider[32];
+        int collidersWritten = 0;
+        foreach (ThermObject obj in graph.thermObjects)
+        {
+            collidersWritten = Physics.OverlapSphereNonAlloc(obj.transform.position, obj.GetComponent<Renderer>().bounds.extents.magnitude, colliderBuffer, 0, QueryTriggerInteraction.Collide);
+
+        }
     }
 }
