@@ -7,7 +7,7 @@ public class ThermObject : MonoBehaviour
     //const float STEFAN_BOLTZMANN_CONSTANT = 5.670f / 100000000f;
 
     public float conductivity, mass, specificHeat, generationRate, temperature, temperatureDelta, volume;
-    public bool actAsHeatSource, isHand;
+    public bool actAsHeatSource, preserveTemperature, isHand;
     public float lastTemperatureDelta;
     Rigidbody rb;
 
@@ -43,6 +43,7 @@ public class ThermObject : MonoBehaviour
         specificHeat = properties.heat_capacity == 0 ? 1 : properties.heat_capacity;
         generationRate = properties.heat_generation_rate;
         temperature = properties.initial_temperature;
+        preserveTemperature = properties.preserve_temperature;
         actAsHeatSource = properties.initially_on;
     }
 
@@ -59,7 +60,10 @@ public class ThermObject : MonoBehaviour
             //Debug.Log($"{name}: acting as heat source");
             ApplyHeatFlow(generationRate);
         }
-        temperature += temperatureDelta;
+        if(!preserveTemperature)
+        {
+            temperature += temperatureDelta;
+        }
         lastTemperatureDelta = temperatureDelta;
         temperatureDelta = 0;
     }

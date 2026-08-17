@@ -587,6 +587,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2344772594487884268, guid: ad3aceaea97b6c04384a06d58f69fa00, type: 3}
+      propertyPath: environmentParent
+      value: 
+      objectReference: {fileID: 1063613690}
     - target: {fileID: 3876851807879711060, guid: ad3aceaea97b6c04384a06d58f69fa00, type: 3}
       propertyPath: m_Name
       value: Central Dogma
@@ -910,7 +914,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4255882423712650}
   - {fileID: 4000010640060132}
   - {fileID: 4000010684557032}
   - {fileID: 4000013093203068}
@@ -6282,7 +6285,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1063613690}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23000009474245982
 MeshRenderer:
@@ -11192,6 +11195,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!33 &33000015038089754
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -11437,6 +11441,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000010502417694
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11480,6 +11485,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000010591905750
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11611,6 +11617,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000011310882332
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11654,6 +11661,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000011391167558
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11697,6 +11705,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000011527835412
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11806,6 +11815,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000011561451334
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11849,6 +11859,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000011608419864
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11914,6 +11925,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000011790677830
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11957,6 +11969,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000011862619108
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12132,6 +12145,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000012345542394
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12241,6 +12255,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000012644823430
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12306,6 +12321,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000012768834610
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12371,6 +12387,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000012830864104
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12414,6 +12431,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000012968914010
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12523,6 +12541,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000013156300238
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12610,6 +12629,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000013264984354
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12741,6 +12761,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000013641685896
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12784,6 +12805,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000013673754448
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12827,6 +12849,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000013790157428
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12892,6 +12915,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000013945388894
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12979,6 +13003,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000014067139632
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13110,6 +13135,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!64 &64000015215606990
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -14666,6 +14692,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &114000010460066686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14791,6 +14818,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &114000011043927798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14903,6 +14931,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &114000012058492700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15028,6 +15057,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &114000012799983340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15062,6 +15092,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &114000013084744130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15174,6 +15205,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &114000013741850640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15221,6 +15253,7 @@ MonoBehaviour:
   volume: 0
   actAsHeatSource: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &114000013944161932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15559,6 +15592,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1524741415}
+  - {fileID: 4255882423712650}
   - {fileID: 1063613690}
   - {fileID: 1208883405}
   - {fileID: 737076982}
