@@ -474,6 +474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BatchScan
   thermObjects: []
+  environmentRoot: {fileID: 0}
   saveToDisk: 0
 --- !u!114 &1699591998473035039
 MonoBehaviour:
@@ -490,6 +491,7 @@ MonoBehaviour:
   freeze: 1
   smallestTempDelta: 0
   timeStep: 0.01
+  ambientTemperature: 20
 --- !u!114 &2338558743827097894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,7 +565,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.49411765, g: 0.49411765, b: 0.49411765, a: 0}
+  m_BackGroundColor: {r: 0.49411765, g: 0.49411765, b: 0.49411765, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -787,7 +789,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.49411765, g: 0.49411765, b: 0.49411765, a: 0}
+  m_BackGroundColor: {r: 0.49411765, g: 0.49411765, b: 0.49411765, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

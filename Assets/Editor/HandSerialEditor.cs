@@ -10,7 +10,7 @@ public class HandSerialEditor : Editor
         HandSerial handSerial = (HandSerial)target;
         if (GUILayout.Button("Send Data"))
         {
-            handSerial.SendDataBytes();
+            handSerial.SendData();
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -9,12 +10,31 @@ using UnityEngine;
 public class BatchScan : MonoBehaviour
 {
     public List<ThermObject> thermObjects;
+    public Transform environmentRoot;
     public bool saveToDisk;
+
     public void ScanAll(List<ThermObject> thermObjects, bool saveToDisk=false)
     {
         Vector3 center = GetCenter(thermObjects);
         ScanScene(center, saveToDisk);
         ScanObjects(thermObjects, saveToDisk);
+    }
+
+    public void ScanRoot(bool saveToDisk=false)
+    {
+        thermObjects = new List<ThermObject>();
+        foreach (Transform child in environmentRoot)
+        {
+            if (child.TryGetComponent<ThermObject>(out var thermObj))
+            {
+                thermObjects.Add(thermObj);
+            }
+            else
+            {
+                thermObjects.Add(child.AddComponent<ThermObject>());
+            }
+        }
+        ScanAll(thermObjects, saveToDisk);
     }
 
     public void ScanScene(Vector3 center, bool saveToDisk=false)

@@ -11,5 +11,9 @@ public class BatchScannerEditor : Editor
         {
             ((BatchScan)target).ScanAll(((BatchScan)target).thermObjects, ((BatchScan)target).saveToDisk);
         }
+        if(GUILayout.Button("Scan Root"))
+        {
+            ((BatchScan)target).ScanRoot(((BatchScan)target).saveToDisk);
+        }
     }
 }

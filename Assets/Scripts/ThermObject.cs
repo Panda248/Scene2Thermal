@@ -8,21 +8,19 @@ public class ThermObject : MonoBehaviour
 
     public float conductivity, mass, specificHeat, generationRate, temperature, temperatureDelta, volume;
     public bool actAsHeatSource, isHand;
-    //Collider coll;
+    public float lastTemperatureDelta;
     Rigidbody rb;
 
     void Awake()
     {
         temperatureDelta = 0;
-        //coll = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
-        //volume = coll.bounds.size.x * coll.bounds.size.y * coll.bounds.size.z;
     }
 
-    private void Start()
-    {
-        ThermResolver.Instance().graph.thermObjects.Add(this);
-    }
+    //private void Start()
+    //{
+    //    ThermResolver.Instance().graph.thermObjects.Add(this);
+    //}
 
     private void OnValidate()
     {
@@ -62,6 +60,7 @@ public class ThermObject : MonoBehaviour
             ApplyHeatFlow(generationRate);
         }
         temperature += temperatureDelta;
+        lastTemperatureDelta = temperatureDelta;
         temperatureDelta = 0;
     }
 

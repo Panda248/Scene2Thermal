@@ -8,7 +8,9 @@ public class HandSerial : MonoBehaviour
 {
     public string portName = "COM5";
     public int baudRate = 9600;
- 
+    public string logPath = "serial_log.csv";
+    public bool logSerialData = false;
+
     [SerializeField]
     HandThermObject palm;
     [SerializeField]
@@ -22,21 +24,18 @@ public class HandSerial : MonoBehaviour
     [SerializeField]
     HandThermObject little;
 
-    List<HandThermObject> handThermObjects;
     SerialPort serialPort;
-    StringBuilder dataBuilder;
     byte[] data = new byte[12];  
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        handThermObjects = new List<HandThermObject> { palm, thumb, index, middle, ring, little };
-
-        dataBuilder = new StringBuilder();
-
+        if (logSerialData)
+        {
+            Logger.OpenLogFile(logPath, "Timestamp,Temperature");
+        }
         serialPort = new SerialPort(portName, baudRate);
         serialPort.Open();
-        //serialPort.write
         if(serialPort.IsOpen)
         {
             Debug.Log($"Serial port {portName} opened at {baudRate} baud.");
@@ -58,6 +57,10 @@ public class HandSerial : MonoBehaviour
                 if (line.Length > 0)
                 {
                     Debug.Log(line);
+                    if (logSerialData)
+                    {
+                        Logger.AppendLog(logPath, $"{Time.time},{line}");
+                    }
                 }
             }
             yield return null;
@@ -69,7 +72,7 @@ public class HandSerial : MonoBehaviour
     {
         //float time = Time.realtimeSinceStartup;
 
-        SendDataBytes();
+        SendData();
 
         //time = Time.realtimeSinceStartup - time;
         //Debug.Log($"Cost: {time}s");
@@ -81,49 +84,51 @@ public class HandSerial : MonoBehaviour
         {
             serialPort.Close();
         }
-    }
-
-    /*
-     * Format for sending temperature data:
-     * PXX.XX TXX.XX IXX.XX MXX.XX RXX.XX LXX.XX\n
-     * Palm   Thumb  Index  Middle Ring   Pinky/Little
-     */
-    public void SendDataString()
-    {
-        if(serialPort == null || !serialPort.IsOpen)
+        if(logSerialData)
         {
-            //Debug.Log("serial port is not open");
-            return;
+            Logger.CloseLogFile(logPath);
         }
-        dataBuilder.Clear();
-
-        dataBuilder.AppendFormat("P{0:00.00} ", palm.temperature);
-        dataBuilder.AppendFormat("T{0:00.00} ", thumb.temperature);
-        dataBuilder.AppendFormat("I{0:00.00} ", index.temperature);
-        dataBuilder.AppendFormat("M{0:00.00} ", middle.temperature);
-        dataBuilder.AppendFormat("R{0:00.00} ", ring.temperature);
-        dataBuilder.AppendFormat("L{0:00.00}\n", little.temperature);
-
-        serialPort.Write(dataBuilder.ToString());
-
-        //serialPort.WriteLine($"{sendTemperature:00.00}");
     }
 
-    public void SendDataBytes()
+    public void SendData()
+    {
+        SendDataBytes(
+            palm?.GetData() ?? 20f, 
+            thumb?.GetData() ?? 20f, 
+            index?.GetData() ?? 20f, 
+            middle?.GetData() ?? 20f, 
+            ring?.GetData() ?? 20f, 
+            little?.GetData() ?? 20f);
+    }
+
+    public void SendDataBytes(float palm, float thumb, float index, float middle, float ring, float little)
     {
         if (serialPort == null || !serialPort.IsOpen)
         {
             //Debug.Log("serial port is not open");
             return;
         }
-        short palm_temp = (short)(palm.temperature * 100);
-        short thumb_temp = (short)(thumb.temperature * 100);
-        short index_temp = (short)(index.temperature * 100);
-        short middle_temp = (short)(middle.temperature * 100);
-        short ring_temp = (short)(ring.temperature * 100);
-        short little_temp = (short)(little.temperature * 100);
 
-        Debug.Log($"Sending temperatures: Palm={palm_temp}, Thumb={thumb_temp}, Index={index_temp}, Middle={middle_temp}, Ring={ring_temp}, Little={little_temp}");
+        for(int i = 0; i < data.Length; i++)
+        {
+            data[i] = 0;
+        }
+
+        float palm_clamped = Mathf.Clamp(palm, 15f, 30f);
+        float thumb_clamped = Mathf.Clamp(thumb, 15f, 30f);
+        float index_clamped = Mathf.Clamp(index, 15f, 30f);
+        float middle_clamped = Mathf.Clamp(middle, 15f, 30f);
+        float ring_clamped = Mathf.Clamp(ring, 15f, 30f);
+        float little_clamped = Mathf.Clamp(little, 15f, 30f);
+
+        short palm_temp = (short)(palm_clamped * 100);
+        short thumb_temp = (short)(thumb_clamped * 100);
+        short index_temp = (short)(index_clamped * 100);
+        short middle_temp = (short)(middle_clamped * 100);
+        short ring_temp = (short)(ring_clamped * 100);
+        short little_temp = (short)(little_clamped * 100);
+
+        //Debug.Log($"Sending temperatures: Palm={palm_temp}, Thumb={thumb_temp}, Index={index_temp}, Middle={middle_temp}, Ring={ring_temp}, Little={little_temp}");
 
         BitConverter.GetBytes(palm_temp).CopyTo(data, 0);
         BitConverter.GetBytes(thumb_temp).CopyTo(data, 2);
@@ -131,10 +136,7 @@ public class HandSerial : MonoBehaviour
         BitConverter.GetBytes(middle_temp).CopyTo(data, 6);
         BitConverter.GetBytes(ring_temp).CopyTo(data, 8);
         BitConverter.GetBytes(little_temp).CopyTo(data, 10);
-        byte[] byteArray = new byte[2];
-        BitConverter.GetBytes(palm_temp).CopyTo(byteArray, 0);
-        short test = BitConverter.ToInt16(byteArray, 0);
-        //Debug.Log($"Test conversion: {test}");
+
         serialPort.Write("S");
         serialPort.Write(data, 0, data.Length);
     }

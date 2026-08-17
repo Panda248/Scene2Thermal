@@ -6,11 +6,19 @@ public class HandThermObject : ThermObject
 {
     public bool returnToBodyTemp;
     public bool enableAmbientHeating;
+    private float mappedTemperature;
     public static float minDistance = 5f;
 
+    public void OnValidate()
+    {
+        conductivity = 0.3f;
+        mass = 1f;
+        specificHeat = 4.814f;
+        temperature = 32f;
+    }
     public float CalulateWeightedTemperatureDelta()
     {
-        
+
         ThermResolver resolver = ThermResolver.Instance();
         float weightedDelta = returnToBodyTemp ? 37f - temperature : resolver.ambientTemperature - temperature;
 
@@ -41,14 +49,20 @@ public class HandThermObject : ThermObject
             float delta = CalulateWeightedTemperatureDelta();
             ApplyHeatFlow(delta * conductivity * 0.01f);
         }
+        MapDelta();
         base.UpdateTemperature();
     }
 
-    public void FixedUpdate()
+    public void MapDelta()
     {
-
+        float mappedDelta = Mathf.Clamp(lastTemperatureDelta / Time.fixedDeltaTime, -10f, 10f) * 1.2f;
+        mappedTemperature = mappedDelta + 27f;
     }
-}
+
+    public float GetData()
+    {
+        return mappedTemperature;
+    }
 
     //public float GetSensedTemperature()
     //{
@@ -62,3 +76,4 @@ public class HandThermObject : ThermObject
     //    }
     //}
 
+}

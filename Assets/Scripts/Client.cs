@@ -15,7 +15,7 @@ public class Client : MonoBehaviour
     static HttpClient httpClient = new()
     {
         BaseAddress = new Uri("http://127.0.0.1:5000"), // replace w/ final url
-        Timeout = TimeSpan.FromSeconds(180)
+        Timeout = TimeSpan.FromSeconds(1200)
     }; 
     static Client instance;
     public static Client Instance()
@@ -98,10 +98,11 @@ public class Client : MonoBehaviour
         // Store Object data into json
         string objContentJson = JsonConvert.SerializeObject(new
         {
-            name = obj.name, 
+            name = obj.name,
             scale = obj.transform.localScale.ToString(),
             size = obj.GetComponentInChildren<MeshFilter>()?.mesh.bounds.size.ToString(),
-            scene_category = SceneCategory
+            scene_category = SceneCategory,
+            ambient_temperature = ThermResolver.Instance().ambientTemperature
         });
         using StringContent objContent = new (objContentJson, System.Text.Encoding.UTF8, "application/json");
 

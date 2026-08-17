@@ -22,7 +22,8 @@ public class ObjectScanner : MonoBehaviour
 
             if(value != null)
             {
-                transform.position = scanObject.transform.position + scanObject.GetComponent<Rigidbody>().centerOfMass;
+                Bounds bounds = scanObject.GetComponentInChildren<Renderer>().bounds;
+                transform.position = scanObject.transform.position + (bounds.size / 2);
             }
         }
     }
@@ -65,6 +66,7 @@ public class ObjectScanner : MonoBehaviour
         
         int prevLayer = target.layer;
         target.layer = 6; // Set to scan layer
+        Bounds bounds = target.GetComponentInChildren<Renderer>().bounds;
 
         EntityId scanObjectId = target.GetEntityId();
         
@@ -85,12 +87,12 @@ public class ObjectScanner : MonoBehaviour
         {
             isoScans.Add(scanObjectId, new List<byte[]>());
         }
-        Vector3 contextOffset = CullUtility.GetTargetDistance(contextCamera.fieldOfView, target.GetComponentInChildren<Renderer>().bounds, 0.3f) * Vector3.back;
+        Vector3 contextOffset = CullUtility.GetTargetDistance(contextCamera.fieldOfView, bounds, 0.3f) * Vector3.back;
         contextCamera.transform.localPosition = contextOffset;
-        Vector3 isoOffset = CullUtility.GetTargetDistance(contextCamera.fieldOfView, target.GetComponentInChildren<Renderer>().bounds, 0.6f) * Vector3.back;
+        Vector3 isoOffset = CullUtility.GetTargetDistance(contextCamera.fieldOfView, bounds, 0.6f) * Vector3.back;
         isoCamera.transform.localPosition = isoOffset;
 
-        transform.position = target.transform.position + target.GetComponent<Rigidbody>().centerOfMass;
+        transform.position = target.transform.position + (bounds.size / 2);
 
         for (int i = 0; i < 4; i++)
         {

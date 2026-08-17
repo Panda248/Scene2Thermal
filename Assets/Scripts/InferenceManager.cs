@@ -44,7 +44,16 @@ public class InferenceManager : MonoBehaviour
     public async void RunStartup()
     {
         ThermResolver.Instance().freeze = true;
-        batchScan.ScanAll(thermObjects);
+        if(environmentParent != null)
+        {
+            batchScan.environmentRoot = environmentParent;
+            batchScan.ScanRoot(true);
+            thermObjects.AddRange(batchScan.thermObjects);
+        }
+        else
+        {
+            batchScan.ScanAll(thermObjects);
+        }
         await materialSetter.BatchSet(thermObjects);
         //ThermResolver.Instance().ResetGraph();
         ThermResolver.Instance().freeze = false;
