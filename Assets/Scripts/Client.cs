@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine.SceneManagement;
+using System.Threading;
 /// <summary>
 /// Handles HTTP requests to server for Semantic Inference
 /// </summary>
@@ -15,7 +16,7 @@ public class Client : MonoBehaviour
     static HttpClient httpClient = new()
     {
         BaseAddress = new Uri("http://127.0.0.1:5000"), // replace w/ final url
-        Timeout = TimeSpan.FromSeconds(1200)
+        Timeout = Timeout.InfiniteTimeSpan
     }; 
     static Client instance;
     public static Client Instance()

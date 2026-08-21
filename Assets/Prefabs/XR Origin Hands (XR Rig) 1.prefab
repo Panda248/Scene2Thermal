@@ -1742,6 +1742,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandSerial
   portName: COM6
   baudRate: 9600
+  logPath: serial_log.csv
+  logSerialData: 0
   palm: {fileID: 8731332154847074042}
   thumb: {fileID: 6893930524833187057}
   index: {fileID: 8543952221775704444}
@@ -1829,7 +1831,6 @@ GameObject:
   - component: {fileID: 1036922658235579246}
   - component: {fileID: 8249828437605749416}
   - component: {fileID: 4037409478938180322}
-  - component: {fileID: 3798970388875845149}
   m_Layer: 0
   m_Name: RightHandQuestVisual
   m_TagString: Untagged
@@ -1999,26 +2000,6 @@ MonoBehaviour:
   m_PokeStrengthSnapThreshold: 0.01
   m_SmoothingAmount: 24
   m_FixedOffset: 0.005
---- !u!114 &3798970388875845149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 745587967735408575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c11943aa4c7e47a47a7b9e98f5c9e79a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HandSerial
-  portName: COM5
-  baudRate: 9600
-  palm: {fileID: 5284031325497718075}
-  thumb: {fileID: 7539024564769998288}
-  index: {fileID: 7947611043014705745}
-  middle: {fileID: 3821037371636594910}
-  ring: {fileID: 1439396079042668192}
-  little: {fileID: 0}
 --- !u!1 &829638387831184479
 GameObject:
   m_ObjectHideFlags: 0
@@ -2489,13 +2470,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
   conductivity: 0.3
   mass: 1
-  specificHeat: 4.184
+  specificHeat: 4.814
   generationRate: 0
   temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 1
+  lastTemperatureDelta: 0
   returnToBodyTemp: 0
   enableAmbientHeating: 0
 --- !u!114 &80944132647254787
@@ -3153,13 +3136,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
   conductivity: 0.3
   mass: 1
-  specificHeat: 4.184
+  specificHeat: 4.814
   generationRate: 0
   temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 1
+  lastTemperatureDelta: 0
   returnToBodyTemp: 0
   enableAmbientHeating: 0
 --- !u!114 &4615156236217771606
@@ -3258,13 +3243,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
   conductivity: 0.3
   mass: 1
-  specificHeat: 4.184
+  specificHeat: 4.814
   generationRate: 0
   temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 1
+  lastTemperatureDelta: 0
   returnToBodyTemp: 0
   enableAmbientHeating: 0
 --- !u!114 &8302860680250507590
@@ -4918,13 +4905,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
   conductivity: 0.3
   mass: 1
-  specificHeat: 4.184
+  specificHeat: 4.814
   generationRate: 0
   temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 1
+  lastTemperatureDelta: 0
   returnToBodyTemp: 0
   enableAmbientHeating: 0
 --- !u!114 &6822311059201490142
@@ -4992,13 +4981,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
   conductivity: 0.3
   mass: 1
-  specificHeat: 4.184
+  specificHeat: 4.814
   generationRate: 0
   temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 1
+  lastTemperatureDelta: 0
   returnToBodyTemp: 0
   enableAmbientHeating: 0
 --- !u!114 &5841354664305024843
@@ -8318,13 +8309,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
   conductivity: 0.3
   mass: 1
-  specificHeat: 4.184
+  specificHeat: 4.814
   generationRate: 0
   temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 1
+  lastTemperatureDelta: 0
   returnToBodyTemp: 0
   enableAmbientHeating: 0
 --- !u!114 &8800576727266592494
@@ -8360,7 +8353,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1179636062433582667
 Transform:
   m_ObjectHideFlags: 0
@@ -8383,13 +8376,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3190439890238402416}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c11943aa4c7e47a47a7b9e98f5c9e79a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandSerial
-  portName: COM5
+  portName: COM6
   baudRate: 9600
+  logPath: serial_log.csv
+  logSerialData: 0
   palm: {fileID: 5284031325497718075}
   thumb: {fileID: 7539024564769998288}
   index: {fileID: 7947611043014705745}
@@ -8680,13 +8675,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
   conductivity: 0.3
   mass: 1
-  specificHeat: 4.184
+  specificHeat: 4.814
   generationRate: 0
   temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 1
+  lastTemperatureDelta: 0
   returnToBodyTemp: 0
   enableAmbientHeating: 0
 --- !u!114 &8419977021856778989
@@ -13696,13 +13693,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
   conductivity: 0.3
   mass: 1
-  specificHeat: 4.184
+  specificHeat: 4.814
   generationRate: 0
   temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 1
+  lastTemperatureDelta: 0
   returnToBodyTemp: 0
   enableAmbientHeating: 0
 --- !u!114 &5868635453493988293
@@ -16032,13 +16031,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
   conductivity: 0.3
   mass: 1
-  specificHeat: 4.184
+  specificHeat: 4.814
   generationRate: 0
   temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 1
+  lastTemperatureDelta: 0
   returnToBodyTemp: 0
   enableAmbientHeating: 0
 --- !u!1 &5742123174211369798
@@ -16313,13 +16314,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
   conductivity: 0.3
   mass: 1
-  specificHeat: 4.184
+  specificHeat: 4.814
   generationRate: 0
   temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 1
+  lastTemperatureDelta: 0
   returnToBodyTemp: 0
   enableAmbientHeating: 0
 --- !u!114 &4768095326354222211
@@ -17058,13 +17061,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
   conductivity: 0.3
   mass: 1
-  specificHeat: 4.184
+  specificHeat: 4.814
   generationRate: 0
   temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 1
+  lastTemperatureDelta: 0
   returnToBodyTemp: 0
   enableAmbientHeating: 0
 --- !u!1 &6079776508386076737
@@ -21094,13 +21099,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandThermObject
   conductivity: 0.3
   mass: 1
-  specificHeat: 4.184
+  specificHeat: 4.814
   generationRate: 0
   temperature: 32
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 1
+  lastTemperatureDelta: 0
   returnToBodyTemp: 0
   enableAmbientHeating: 0
 --- !u!114 &8203712632996155779

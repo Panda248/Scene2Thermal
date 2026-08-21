@@ -17,10 +17,10 @@ public class ThermObject : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    //private void Start()
-    //{
-    //    ThermResolver.Instance().graph.thermObjects.Add(this);
-    //}
+    private void Start()
+    {
+        ThermResolver.Instance().graph.thermObjects.Add(this);
+    }
 
     private void OnValidate()
     {
@@ -60,10 +60,11 @@ public class ThermObject : MonoBehaviour
             //Debug.Log($"{name}: acting as heat source");
             ApplyHeatFlow(generationRate);
         }
-        if(!preserveTemperature)
-        {
-            temperature += temperatureDelta;
-        }
+        //if(!preserveTemperature)
+        //{
+        temperature += temperatureDelta;
+        //}
+        Debug.Log("HELOO????");
         lastTemperatureDelta = temperatureDelta;
         temperatureDelta = 0;
     }

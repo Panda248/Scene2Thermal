@@ -268,7 +268,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!54 &126463825
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -533,7 +535,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &211428054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -784,7 +788,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &231854401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1322,7 +1328,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!65 &810752028
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1734,7 +1742,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!54 &1228883059
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1933,7 +1943,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &1281554877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2197,7 +2209,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &1304423452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2791,7 +2805,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!65 &1820649079 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 2517768472255427143, guid: e6eb8f4805e0e5745902f0c605a95850, type: 3}
@@ -3040,7 +3056,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &1842993320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3262,7 +3280,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &1880015887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3471,7 +3491,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &1962485844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3659,7 +3681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7340102470411552512, guid: ad3aceaea97b6c04384a06d58f69fa00, type: 3}
       propertyPath: saveToDisk
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4193,7 +4215,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!54 &5334037118868646457
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4357,7 +4381,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!54 &5334037119206284369
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4788,7 +4814,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!114 &8707273952440259832
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,10 +20,10 @@ public class ThermResolver : MonoBehaviour
         graph = new ThermGraph();
     }
 
-    private void Start()
-    {
-        ResetGraph();
-    }
+    //private void Start()
+    //{
+    //    ResetGraph();
+    //}
 
     // Update is called once per frame
     void FixedUpdate()
@@ -114,16 +114,5 @@ public class ThermResolver : MonoBehaviour
         graph.Clear();
         graph.thermObjects.AddRange(FindObjectsByType<ThermObject>());
         Debug.Log(graph.thermObjects.Count + " ThermObjects found.");
-    }
-
-    public void DetectCollisions()
-    {
-        Collider[] colliderBuffer = new Collider[32];
-        int collidersWritten = 0;
-        foreach (ThermObject obj in graph.thermObjects)
-        {
-            collidersWritten = Physics.OverlapSphereNonAlloc(obj.transform.position, obj.GetComponent<Renderer>().bounds.extents.magnitude, colliderBuffer, 0, QueryTriggerInteraction.Collide);
-
-        }
     }
 }

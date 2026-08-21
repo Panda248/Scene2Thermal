@@ -47,7 +47,7 @@ public class InferenceManager : MonoBehaviour
         if(environmentParent != null)
         {
             batchScan.environmentRoot = environmentParent;
-            batchScan.ScanRoot(true);
+            batchScan.ScanRoot(false);
             thermObjects.AddRange(batchScan.thermObjects);
         }
         else

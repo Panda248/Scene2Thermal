@@ -4,24 +4,32 @@ public class HandLogger : MonoBehaviour
 {
     public HandThermObject target;
     public string logPath = "hand_log.csv";
+    
+    // Store the handle to prevent modifying the public logPath field
+    private string activeLogFile;
+
     public void Start()
     {
-        Logger.OpenLogFile(logPath, "Timestamp,Temperature, TemperatureDelta, MappedTemperature");
+        activeLogFile = Logger.OpenLogFile(logPath, "Timestamp,Temperature, TemperatureDelta, MappedTemperature");
     }
 
     public void FixedUpdate()
     {
-        if (target != null)
+        if (target != null && !string.IsNullOrEmpty(activeLogFile))
         {
             float temperature = target.temperature;
             float temperatureDelta = target.lastTemperatureDelta;
             float mappedTemperature = target.GetData();
-            Logger.AppendLog(logPath, $"{Time.time},{temperature},{temperatureDelta},{mappedTemperature}");
+            Logger.AppendLog(activeLogFile, $"{Time.time},{temperature},{temperatureDelta},{mappedTemperature}");
         }
     }
 
     private void OnDestroy()
     {
-        Logger.CloseLogFile(logPath);
+        if (!string.IsNullOrEmpty(activeLogFile))
+        {
+            Logger.CloseLogFile(activeLogFile);
+            activeLogFile = null;
+        }
     }
 }

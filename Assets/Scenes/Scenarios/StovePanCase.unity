@@ -164,9 +164,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2344772594487884268, guid: ad3aceaea97b6c04384a06d58f69fa00, type: 3}
-      propertyPath: runStartup
-      value: 1
+    - target: {fileID: 1699591998473035039, guid: ad3aceaea97b6c04384a06d58f69fa00, type: 3}
+      propertyPath: freeze
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3876851807879711060, guid: ad3aceaea97b6c04384a06d58f69fa00, type: 3}
       propertyPath: m_Name
@@ -212,8 +212,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3502820955158650268, guid: ad3aceaea97b6c04384a06d58f69fa00, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -429,7 +428,9 @@ MonoBehaviour:
   temperatureDelta: 0
   volume: 0
   actAsHeatSource: 0
+  preserveTemperature: 0
   isHand: 0
+  lastTemperatureDelta: 0
 --- !u!54 &921754028
 Rigidbody:
   m_ObjectHideFlags: 0
