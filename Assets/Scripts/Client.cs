@@ -12,10 +12,11 @@ using System.Threading;
 public class Client : MonoBehaviour
 {
     public GameObject targetObject;
-    public String objectInferenceJson, sceneInferenceJson, SceneCategory;
+    publci string uri = "http://127.0.0.1:5000"
+    public string objectInferenceJson, sceneInferenceJson, SceneCategory;
     static HttpClient httpClient = new()
     {
-        BaseAddress = new Uri("http://127.0.0.1:5000"), // replace w/ final url
+        BaseAddress = new Uri(uri), // replace w/ final url
         Timeout = Timeout.InfiniteTimeSpan
     }; 
     static Client instance;
