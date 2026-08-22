@@ -52,20 +52,28 @@ public class HandThermObject : ThermObject
         MapDelta();
     }
 
+
     public void MapDelta()
     {
-        float x = Mathf.Abs(lastTemperatureDelta / Time.fixedDeltaTime);
-        float yOffset = 12;
-        float numerator = 46;
-        float xOffset = 3.833f;
+        float x = lastTemperatureDelta / Time.fixedDeltaTime;
+        //float mappedDelta = Mathf.Sign(lastTemperatureDelta) * (-(numerator / (x - xOffset)) + yOffset);
 
-        float mappedDelta = Mathf.Sign(lastTemperatureDelta) * (-(numerator / (x - xOffset)) + yOffset);
+        //V2 Sigmoid (a / (1 + e^-(bx))) - a/2
+        // a  = range, b = 1 / period or horizontal squish
+        float range = 24f;
+        float squish = 1f;
+
+        float mappedDelta = (range / (1 + Mathf.Exp(-squish * x))) - (range * 0.5f);
+        Debug.Log("X: " + x);
+        Debug.Log($"mappedDelta: {mappedDelta}");
+        // V1 linear map 
         //float mappedDelta = Mathf.Clamp(lastTemperatureDelta / Time.fixedDeltaTime, -10f, 10f) * 1.2f;
         mappedTemperature = mappedDelta + 27f;
     }
 
     public float GetData()
     {
+        MapDelta();
         return mappedTemperature;
         //return lastTemperatureDelta * 1000.0f;
     }

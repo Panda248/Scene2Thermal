@@ -227,7 +227,7 @@ Transform:
   m_GameObject: {fileID: 91206781}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.683, y: 3.516, z: 1.447}
+  m_LocalPosition: {x: 0.683, y: 3.516, z: 0.698}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandSerial
   portName: COM6
   baudRate: 9600
-  logPath: coldhand.csv
+  logPath: serial.csv
   logSerialData: 1
   palm: {fileID: 1075115712}
   thumb: {fileID: 0}
@@ -830,7 +830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HandLogger
   target: {fileID: 1075115712}
-  logPath: cold.csv
+  logPath: objdata.csv
 --- !u!4 &2140082083
 Transform:
   m_ObjectHideFlags: 0

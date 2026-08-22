@@ -36,7 +36,7 @@ public class HandSerial : MonoBehaviour
         if (logSerialData)
         {
             // Store the timestamped log file name
-            activeLogFile = Logger.OpenLogFile(logPath, "Timestamp,Temperature");
+            activeLogFile = Logger.OpenLogFile(logPath, "Timestamp,Output,Expected,Peltier");
         }
         serialPort = new SerialPort(portName, baudRate);
         serialPort.Open();
@@ -136,7 +136,7 @@ public class HandSerial : MonoBehaviour
         short ring_temp = (short)(ring * 100);
         short little_temp = (short)(little * 100);
 
-        //Debug.Log($"Sending temperatures: Palm={palm_temp}, Thumb={thumb_temp}, Index={index_temp}, Middle={middle_temp}, Ring={ring_temp}, Little={little_temp}");
+        Debug.Log($"Sending temperatures: Palm={palm_temp}, Thumb={thumb_temp}, Index={index_temp}, Middle={middle_temp}, Ring={ring_temp}, Little={little_temp}");
 
         BitConverter.GetBytes(palm_temp).CopyTo(data, 0);
         BitConverter.GetBytes(thumb_temp).CopyTo(data, 2);

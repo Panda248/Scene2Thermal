@@ -12,13 +12,9 @@ using System.Threading;
 public class Client : MonoBehaviour
 {
     public GameObject targetObject;
-    publci string uri = "http://127.0.0.1:5000"
+    public string uri = "http://127.0.0.1:5000";
     public string objectInferenceJson, sceneInferenceJson, SceneCategory;
-    static HttpClient httpClient = new()
-    {
-        BaseAddress = new Uri(uri), // replace w/ final url
-        Timeout = Timeout.InfiniteTimeSpan
-    }; 
+    HttpClient httpClient;
     static Client instance;
     public static Client Instance()
     {
@@ -27,6 +23,13 @@ public class Client : MonoBehaviour
             instance = FindAnyObjectByType<Client>();
         }
         return instance;
+    }
+
+    public void Awake()
+    {
+        httpClient = new HttpClient();
+        httpClient.BaseAddress = new Uri(uri);
+        httpClient.Timeout = Timeout.InfiniteTimeSpan;
     }
 
     //private MultipartFormDataContent ConstructByteArrayContents(List<byte[]> files, string prefix)

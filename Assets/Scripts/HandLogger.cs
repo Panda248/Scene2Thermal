@@ -18,7 +18,7 @@ public class HandLogger : MonoBehaviour
         if (target != null && !string.IsNullOrEmpty(activeLogFile))
         {
             float temperature = target.temperature;
-            float temperatureDelta = target.lastTemperatureDelta;
+            float temperatureDelta = target.lastTemperatureDelta / Time.fixedDeltaTime;
             float mappedTemperature = target.GetData();
             Logger.AppendLog(activeLogFile, $"{Time.time},{temperature},{temperatureDelta},{mappedTemperature}");
         }
