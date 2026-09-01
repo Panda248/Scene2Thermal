@@ -36,7 +36,7 @@ public class HandSerial : MonoBehaviour
         if (logSerialData)
         {
             // Store the timestamped log file name
-            activeLogFile = Logger.OpenLogFile(logPath, "Timestamp,Output,Expected,Peltier");
+            activeLogFile = Logger.OpenLogFile(logPath, "Timestamp,Expected,Peltier");
         }
         serialPort = new SerialPort(portName, baudRate);
         serialPort.Open();
