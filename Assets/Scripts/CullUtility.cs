@@ -53,6 +53,24 @@ public class CullUtility
         }
     }
 
+    public static Bounds GetBounds(GameObject target)
+    {
+        Bounds bounds = new Bounds();
+        Renderer[] renderers =  target.GetComponentsInChildren<Renderer>();
+
+        foreach (Renderer renderer in renderers)
+        {
+            if(bounds.size == Vector3.zero)
+            {
+                bounds = renderer.bounds;
+                continue;
+            }
+            bounds.Encapsulate(renderer.bounds);
+        }
+
+        return bounds;
+    }
+
     public static float GetTargetDistance(float fov, Bounds bounds, float ratio)
     {
         float size = (bounds.max - bounds.min).magnitude;

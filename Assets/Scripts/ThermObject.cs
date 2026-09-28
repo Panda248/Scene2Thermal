@@ -64,7 +64,6 @@ public class ThermObject : MonoBehaviour
         //{
         temperature += temperatureDelta;
         //}
-        Debug.Log("HELOO????");
         lastTemperatureDelta = temperatureDelta;
         temperatureDelta = 0;
     }

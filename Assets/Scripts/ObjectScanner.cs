@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.XR.ARSubsystems;
 
 /// <summary>
 /// Script for caputring isolated and context images for a set 
@@ -14,6 +15,9 @@ public class ObjectScanner : MonoBehaviour
     public Texture2D isoTexture, contextTexture;
     public Dictionary<EntityId, List<byte[]>> contextScans;
     public Dictionary<EntityId, List<byte[]>> isoScans;
+    public int isolationLayer = 6;
+    static readonly List<Renderer> _rendererBuffer = new List<Renderer>();
+    static readonly List<int> _originalLayers = new List<int>();
     List<GameObject> culled;
     public GameObject ScanObject {  get { return scanObject; }
         set
@@ -44,6 +48,7 @@ public class ObjectScanner : MonoBehaviour
         hRotator = transform.GetChild(0).GetComponent<Rotator>();
         vRotator = hRotator.transform.GetChild(0).GetComponent<Rotator>();
         isoCamera = vRotator.transform.GetChild(0).GetComponent<Camera>();
+        isoCamera.cullingMask = 1 << isolationLayer;
         contextCamera = vRotator.transform.GetChild(1).GetComponent<Camera>();
         isoLight = isoCamera.GetComponentInChildren<Light>();
         contextLight = contextCamera.GetComponentInChildren<Light>();
@@ -63,10 +68,17 @@ public class ObjectScanner : MonoBehaviour
     public void Scan(bool saveToDisk, GameObject target)
     {
         Debug.Log($"Scanning {target.name}");
-        
-        int prevLayer = target.layer;
-        target.layer = 6; // Set to scan layer
-        Bounds bounds = target.GetComponentInChildren<Renderer>().bounds;
+
+        target.GetComponentsInChildren(true, _rendererBuffer);
+        _originalLayers.Clear();
+
+        foreach (var r in _rendererBuffer)
+        {
+            _originalLayers.Add(r.gameObject.layer);
+            r.gameObject.layer = isolationLayer;
+        }
+
+        Bounds bounds = CullUtility.GetBounds(target);
 
         EntityId scanObjectId = target.GetEntityId();
         
@@ -136,7 +148,10 @@ public class ObjectScanner : MonoBehaviour
             hRotator.Rotate();
         }
 
-        target.layer = prevLayer;
+        for (int i = 0; i < _rendererBuffer.Count; i++)
+        {
+            _rendererBuffer[i].gameObject.layer = _originalLayers[i];
+        }
     }
 
     void Cull(GameObject target)
